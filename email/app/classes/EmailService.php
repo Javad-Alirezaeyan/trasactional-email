@@ -34,7 +34,7 @@ class EmailService
      */
     public function setService($index)
     {
-        $this->slctEmailService = $this->emailServices[$index];
+        return $this->slctEmailService = $this->emailServices[$index];
     }
 
 
