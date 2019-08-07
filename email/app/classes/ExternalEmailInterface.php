@@ -6,12 +6,11 @@
  * Time: 10:36 AM
  */
 
-namespace App\Compenents\ExternalEmail;
-
+namespace App\classes;
 
 interface ExternalEmailInterface
 {
-    function send($title , $body, $receiver);
+    function send($subject , $contentValue, $contetnType, $receiver, $from);
     function checkState($id);
     function isAvailable();
 }

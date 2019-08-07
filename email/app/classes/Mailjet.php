@@ -6,15 +6,17 @@
  * Time: 10:51 AM
  */
 
-namespace App\Components\ExternalEmail;
+namespace App\classes;
 
 
-use App\Compenents\ExternalEmail\ExternalEmailInterface;
 
 class Mailjet implements ExternalEmailInterface
 {
-
-    function send($title, $body, $receiver)
+    public function __construct()
+    {
+        
+    }
+    function send($subject, $contentValue, $contentType, $receiver, $from)
     {
         // TODO: Implement send() method.
     }

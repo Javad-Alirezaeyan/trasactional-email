@@ -6,10 +6,8 @@
  * Time: 10:53 AM
  */
 
-namespace App\Components\ExternalEmail;
+namespace App\classes;
 
-
-use App\Compenents\ExternalEmail\ExternalEmailInterface;
 
 class Sendgrid implements ExternalEmailInterface
 {
@@ -62,6 +60,7 @@ class Sendgrid implements ExternalEmailInterface
 
     function isAvailable()
     {
+        return true;
         // TODO: Implement isAvailable() method.
     }
 
