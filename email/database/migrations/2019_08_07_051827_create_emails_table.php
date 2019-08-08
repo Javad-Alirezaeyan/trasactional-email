@@ -13,11 +13,15 @@ class CreateEmailsTable extends Migration
      */
     public function up()
     {
+
         Schema::create('emails', function (Blueprint $table) {
             $table->bigIncrements('email_id');
-            $table->string('email_title', 300);
-            $table->text('email_body');
-            $table->json('email_receiver', 2000);
+            $table->string('email_subject', 300);
+            $table->text('email_contentValue');
+            $table->json('email_to', 2000);
+            $table->string('email_from', 100);
+            $table->string('email_replyto', 100);
+            $table->string('email_contentType',30);
             $table->smallInteger("email_state");
             $table->smallInteger('email_service');
             $table->softDeletes();
