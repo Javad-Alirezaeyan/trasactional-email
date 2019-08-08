@@ -35,8 +35,6 @@ class SendEmailJob implements ShouldQueue
         $objEmail = new \App\classes\EmailService();
         list($res, $msg) = $objEmail->sendEmail($request->email_subject, $request->email_contentValue,
         json_decode($request->email_to),$request->email_from, $request->email_contentType);
-        $request->email_state = 3;
-        $request->save();
 
     }
 }
