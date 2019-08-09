@@ -9,6 +9,9 @@ use App\Email;
 
 class EmailController extends Controller
 {
+
+    protected $layout = 'layouts.master';
+
     /**
      * @return Email[]|\Illuminate\Database\Eloquent\Collection
      * this function returns all email records
@@ -52,13 +55,22 @@ class EmailController extends Controller
         $objEmail = new \App\classes\EmailService();
         if($objEmail){
             // create an email job and assign to dispatch
-            SendEmailJob::dispatch($obj)->delay(now()->addSecond(10));
+             // SendEmailJob::dispatch($obj)->delay(now()->addSecond(2));
+
+            list($res, $msg) = $objEmail->sendEmail($obj->email_subject, $obj->email_contentValue,
+                json_decode($obj->email_to),$obj->email_from, $obj->email_contentType);
+            if($res){
+                return response()->json(['msg' => 'sent'], 200);
+            }
+            else{
+                return response()->json(['msg' => 'fail'], 300);
+            }
+
         }
         else{
             //all services are unavailable
             return response()->json(['msg' => 'all services are unavailable'], 300);
         }
-        return response()->json(['msg' => 'sent'], 200);
        // return Email::create($request->all());
     }
 
@@ -67,5 +79,16 @@ class EmailController extends Controller
         $email = Email::findOrFail($id);
         $email->delete();
         return 204;
+    }
+
+
+    public function showall(){
+
+        return view("/email/table");
+    }
+
+    public function compose(){
+
+        return view("/email/compose");
     }
 }
