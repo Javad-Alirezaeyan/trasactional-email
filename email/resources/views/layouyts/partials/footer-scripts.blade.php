@@ -30,9 +30,15 @@
 <script src="{{asset("theme/assets/plugins/vectormap/jquery-jvectormap-us-aea-en.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/footable/js/footable.all.min.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/bootstrap-select/bootstrap-select.min.js")}} " ></script>
-<script src="{{asset("theme/horizontal/js/dashboard2.js")}} " ></script>
+
 <script src="{{asset("theme/assets/plugins/styleswitcher/jQuery.style.switcher.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/sweetalert/sweetalert.min.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/styleswitcher/jQuery.style.switcher.js")}} " ></script>
+<script src="{{ asset("theme/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js") }}"></script>
+<script src="{{ asset("theme/assets/plugins/sweetalert/sweetalert.min.js") }}"></script>
+<script src="{{ asset("theme/assets/plugins/sweetalert/jquery.sweet-alert.custom.js") }}"></script>
+<script src="{{ asset("theme/assets/plugins/styleswitcher/jQuery.style.switcher.js") }}"></script>
+<script src="{{ asset("js/function.js") }}"></script>
+
 
 
