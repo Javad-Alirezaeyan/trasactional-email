@@ -11,7 +11,7 @@
 
 
         <div class="form-group">
-            <input class="form-control"  v-model="to"  placeholder="To:">
+            <input class="form-control" id="to" data-role="tagsinput"  v-model="to"  placeholder="To:">
         </div>
         <div class="form-group">
             <input class="form-control" v-model="subject" placeholder="Subject:"  value="Hello">
@@ -60,12 +60,17 @@
 
             validation(){
                 //validate form
+                let to = ($("#to").val()).split(',');
+                console.log(to);
                 let valid =  true;
                 this.errors = [];
-                if ( !validateEmail(this.to) ){
-                    this.errors.push("Email(to) is invalid");
-                    valid = false;
+                for (let i= 0; i < to.length; i++){
+                    if ( !validateEmail(to[i]) ){
+                        this.errors.push(to[i] +" isn't a valid email");
+                        valid = false;
+                    }
                 }
+
                 if ( !validateEmail(this.from) ){
                     this.errors.push("Email(from) is invalid");
                     valid = false;
@@ -89,7 +94,7 @@
                 let senddata = {
                     subject: this.subject,
                     from: this.from,
-                    to : JSON.stringify(this.to) ,
+                    to : $("#to").val() ,
                     contentValue : this.content,
                     contentType :  "text/plain"
                 };
@@ -116,7 +121,7 @@
 
                         }
                         else{
-                            alert("Error on Server");
+                            this.errors = res.errors;
                         }
                     })
                     .fail(function (jqXHR, textStatus) {

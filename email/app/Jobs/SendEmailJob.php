@@ -11,17 +11,18 @@ use Illuminate\Foundation\Bus\Dispatchable;
 class SendEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    public $tries = 5;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    protected  $request ;
+    protected  $sender ;
     public function __construct($req)
     {
         //
-        $this->request = $req;
+        $this->sender = $req;
     }
 
     /**
@@ -31,10 +32,17 @@ class SendEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        $request = $this->request;
+        $sender = $this->sender;
         $objEmail = new \App\classes\EmailService();
-        list($res, $msg) = $objEmail->sendEmail($request->email_subject, $request->email_contentValue,
-        json_decode($request->email_to),$request->email_from, $request->email_contentType);
+        if($objEmail){
+            list($res, $msg) = $objEmail->sendEmail($sender->email_subject, $sender->email_contentValue,
+                explode(',', $sender->email_to) ,$sender->email_from, $sender->email_contentType);
+        }
+        else{
+            //all services are unavailable
+
+        }
+
 
     }
 }

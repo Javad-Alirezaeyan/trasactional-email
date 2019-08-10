@@ -8,6 +8,13 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+/*
+import DataTable from 'laravel-vue-datatable';
+Vue.use(DataTable);
+*/
+
+
+var axios = require('axios');
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -19,7 +26,11 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+
+Vue.component('table-email', require('./components/TableEmail.vue').default);
+Vue.component('compose-email', require('./components/Compose.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,3 +41,19 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+
+
+/*function getMeta(metaName) {
+    const metas = document.getElementsByTagName('meta');
+
+    for (let i = 0; i < metas.length; i++) {
+        if (metas[i].getAttribute('name') === metaName) {
+            return metas[i].getAttribute('content');
+        }
+    }
+
+    return '';
+}
+
+console.log(getMeta('csrf-token'))*/;

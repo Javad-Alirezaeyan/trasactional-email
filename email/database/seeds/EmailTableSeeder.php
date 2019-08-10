@@ -23,8 +23,8 @@ class EmailTableSeeder extends Seeder
         // And now, let's create a few articles in our database:
         for ($i = 0; $i < 50; $i++) {
             Email::create([
-                'email_title' => $faker->sentence,
-                'email_body' => $faker->paragraph,
+                'email_subject' => $faker->sentence,
+                'email_contentText' => $faker->paragraph,
                 'email_receiver' => json_encode($recv),
                 'email_state'=> $faker->numberBetween(0,2),
                 'email_service'=> $faker->numberBetween(0,1)

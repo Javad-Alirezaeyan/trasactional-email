@@ -82,12 +82,15 @@
 
         </div>
     </div>
-    <script src="{{ asset('js/app.js') }}" ></script>
+
 
 @yield('js');
 
+
 @include('layouyts.partials.footer-scripts')
 
+
+<script src="{{ asset('js/app.js') }}" ></script>
 </div>
 
 </body>

@@ -47,7 +47,7 @@ class EmailService
      */
     public function sendEmail(string $subject, string $contentValue, array $receivers, string $from, string $contentType = "text/plain")
     {
-        $res = $this->slctEmailService->send($subject, $contentValue, $contentType, $receivers, $from);
+        return  $this->slctEmailService->send($subject, $contentValue, $contentType, $receivers, $from);
     }
 
     /**
