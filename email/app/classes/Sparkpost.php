@@ -57,10 +57,10 @@ class Sparkpost implements ExternalEmailInterface
         return true;
     }
 
-    private function sendToApi(){
+    private function sendToApi($params){
 
+        $length = strlen($params);
         $curl = curl_init();
-
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.sparkpost.com/api/v1/transmissions",
             CURLOPT_RETURNTRANSFER => true,
@@ -69,14 +69,14 @@ class Sparkpost implements ExternalEmailInterface
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "{\n    \"options\": {\n      \"sandbox\": true\n    },\n    \"content\": {\n      \"from\": \"sandbox@sparkpostbox.com\",\n      \"subject\": \"Thundercats are GO!!!\",\n      \"text\": \"Sword of Omens, give me sight BEYOND sight\"\n    },\n    \"recipients\": [{ \"address\": \"alirezaeyan.javad@gmail.com\" }]\n}",
+            CURLOPT_POSTFIELDS => $params,
             CURLOPT_HTTPHEADER => array(
                 "Accept: */*",
                 "Accept-Encoding: gzip, deflate",
                 "Authorization: 89e2ebbc7b81a34962e7621d5e7e5a38949f7473",
                 "Cache-Control: no-cache",
                 "Connection: keep-alive",
-                "Content-Length: 281",
+                "Content-Length: $length",
                 "Content-Type: application/json",
                 "Host: api.sparkpost.com",
                 "Postman-Token: 6eca2123-dbcf-4435-b032-09f83b01eef2,8ca5643c-27bb-4abe-ba86-4a1388450f5b",
