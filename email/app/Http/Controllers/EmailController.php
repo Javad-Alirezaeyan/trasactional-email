@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Controllers\API\ResponseObject;
+use App\Http\Requests\SendEmailValidator;
 use App\Jobs\SendEmailJob;
-use Carbon\Carbon;
+use App\Library\Parsemarkdown;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Email;
+
 
 class EmailController extends Controller
 {
@@ -41,37 +47,47 @@ class EmailController extends Controller
      */
     public function send(Request $request)
     {
-        // save record to db
-        $obj = new Email();
-        $obj->email_subject =  $request->subject;
-        $obj->email_to =  $request->to;
-        $obj->email_from =  $request->from;
-        $obj->email_contentType =  $request->contentType;
-        $obj->email_contentValue =  $request->contentValue;
-        $obj->email_state =  0;
-        $obj->save();
-        //send Email
 
-        $objEmail = new \App\classes\EmailService();
-        if($objEmail){
-            // create an email job and assign to dispatch
-             // SendEmailJob::dispatch($obj)->delay(now()->addSecond(2));
+        $response = new ResponseObject();
 
-            list($res, $msg) = $objEmail->sendEmail($obj->email_subject, $obj->email_contentValue,
-                json_decode($obj->email_to),$obj->email_from, $obj->email_contentType);
-            if($res){
-                return response()->json(['msg' => 'sent'], 200);
+        $validator = Validator::make($request->all(), [
+            'to' => 'required|min:6',
+            'subject' => 'required',
+            'from' => 'required',
+            'contentValue' => 'required',
+        ]);
+        //validation input
+        if($validator->fails()){
+            $response->status = $response::status_failed;
+            $response->code = $response::code_failed;
+            foreach ($validator->errors()->getMessages() as $item) {
+                array_push($response->errors, $item);
             }
-            else{
-                return response()->json(['msg' => 'fail'], 300);
-            }
-
         }
         else{
-            //all services are unavailable
-            return response()->json(['msg' => 'all services are unavailable'], 300);
+            // parse content, for example: MARKDOWN converts to HTML
+            $objParse  = new Parsemarkdown();
+            $content =  $objParse->text($request->contentValue);
+            // save record to db
+            $obj = new Email();
+            $obj->email_subject =  $request->subject;
+            $obj->email_to =  $request->to;
+            $obj->email_from =  $request->from;
+            $obj->email_contentType =  $request->input('contentType', 'text/html');
+            $obj->email_contentValue =  $content;
+            $obj->email_orginalContent =  $request->contentValue;
+            $obj->email_state =  0;
+            $obj->save();
+
+            // create an email job and assign to dispatch
+            SendEmailJob::dispatch($obj)->delay(now()->addSecond(5));// the job will be access to process after 5 seconds
+            $response->status = $response::status_ok;
+            $response->code = $response::code_ok;
+            $response->result = ['Message'=>"Queued"];
         }
-       // return Email::create($request->all());
+
+
+        return Response::json($response);
     }
 
     public function delete(Request $request, $id)
@@ -82,13 +98,30 @@ class EmailController extends Controller
     }
 
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * this method shows all emails in a table
+     *
+     */
     public function showall(){
 
-        return view("/email/table");
+        return view("/email/emailframe",
+            [
+                'partialview'=> 'table'
+            ]
+        );
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * this function shows a form to send an email
+     */
     public function compose(){
 
-        return view("/email/compose");
+        return view("/email/emailframe",
+            [
+                'partialview'=> 'compose'
+            ]
+        );
     }
 }
