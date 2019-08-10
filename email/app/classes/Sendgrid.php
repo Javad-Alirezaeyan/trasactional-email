@@ -48,7 +48,7 @@ class Sendgrid implements ExternalEmailInterface
                     ),
             );
 
-        $res = $this->postToAPI(json_encode($params),  "https://api.sendgrid.com/v3/mail/send");
+        $res = $this->postToAPI(json_encode($params));
         if($res === false){
             // there was an error on API
             return [false, 'There was an error on API'];
@@ -58,7 +58,7 @@ class Sendgrid implements ExternalEmailInterface
         }
     }
 
-    private function postToAPI($params, $url)
+    private function postToAPI($params)
     {
         $curl = curl_init();
         $count = strlen($params);
