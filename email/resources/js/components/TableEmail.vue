@@ -5,6 +5,7 @@
             <td>Select</td>
             <td>Star</td>
             <td>To</td>
+            <td>From</td>
             <td>Subject</td>
             <td>Content</td>
             <td>Date</td>
@@ -21,6 +22,7 @@
             </td>
             <td class="hidden-xs-down" style="width:40px"><i class="fa fa-star-o"></i></td>
             <td class="hidden-xs-down">{{ email.email_to }}</td>
+            <td class="hidden-xs-down">{{ email.email_from }}</td>
             <td class="hidden-xs-down">{{ email.email_subject }}</td>
             <td class="hidden-xs-down">{{ email.email_contentValue }}</td>
             <td class="text-right"> {{ email.createdat}}</td>
@@ -43,7 +45,8 @@
                     'to': '',
                     'from': '',
                     'subject': '',
-                    'content': ''
+                    'content': '',
+                    'state' : ''
                 },
                 'email_id': '',
                 'pagination': [],
