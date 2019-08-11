@@ -17,11 +17,12 @@ class Email extends JsonResource
         return [
             'id' => $this->email_id,
             'subject'=> $this->email_subject,
-            'to' =>$this->to,
-            'from'=> $this->from,
-            'state' => $this->state,
-            'content'=> $this->contentValue,
-            'contentType'=> $this->contentType
+            'to' =>$this->email_to,
+            'from'=> $this->email_from,
+            'state' => $this->email_state,
+            'content'=> $this->email_contentValue,
+            'contentType'=> $this->email_contentType,
+            'date'=> $this->created_at
         ];
         //return parent::toArray($request);
     }
