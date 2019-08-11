@@ -19,9 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 
-Route::post('sendEmail', 'EmailController@send');
-Route::get('all', 'EmailController@index');
+Route::post('email', 'EmailController@send');
+Route::get('email', 'EmailController@index');
 Route::get('email/{id}', 'EmailController@show');
+Route::delete('email/{id}', 'EmailController@delete');
+Route::delete('email', 'EmailController@delete');
 
 
 

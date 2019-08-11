@@ -18,3 +18,4 @@
 Route::get("/", 'EmailController@showall');
 Route::get("/showall", 'EmailController@showall');
 Route::get("/compose", 'EmailController@compose');
+Route::get("/detail/{id}", 'EmailController@detail');

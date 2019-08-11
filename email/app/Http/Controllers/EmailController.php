@@ -30,21 +30,24 @@ class EmailController extends Controller
 
         $response->status = $response::status_ok;
         $response->code = $response::code_ok;
-        $response->result = Email::all();
-        $response->result = new EmailCollection(Email::all());
+       // $response->result = Email::all();
+        $response->result = new EmailCollection(Email::selectData(['email_deleted'=> 0]));
         return Response::json($response);
     }
 
     /**
      * @param $id  id of the email record
-     * this method finds a email and returns related data
+     * this method finds an email and returns related data
      * @return mixed
      */
     public function show($id)
     {
-        return Email::find($id);
+        $response = new ResponseObject();
+        $response->status = $response::status_ok;
+        $response->code = $response::code_ok;
+        $response->result =  new EmailResource(Email::find($id));
+        return Response::json($response);
     }
-
 
     /**
      * @param Request $request
@@ -55,7 +58,6 @@ class EmailController extends Controller
      */
     public function send(Request $request)
     {
-
         $response = new ResponseObject();
 
         $validator = Validator::make($request->all(), [
@@ -93,16 +95,21 @@ class EmailController extends Controller
             $response->code = $response::code_ok;
             $response->message = "Queued";
         }
-
-
         return Response::json($response);
     }
 
     public function delete(Request $request, $id)
     {
-        $email = Email::find($id);
-        $email->delete();
-        return 204;
+        $bulkIdList = $request->input('idList', "[$id]");
+//        var_dump($bulkIdList); exit;
+        if(is_array($bulkIdList)){
+            Email::updateBulk($bulkIdList, ['email_deleted'=> 1]);
+        }
+        $response = new ResponseObject();
+        $response->status = 204;
+        $response->code = $response::code_ok;
+        $response->message = "Queued";
+        return Response::json($response);
     }
 
 
@@ -115,7 +122,8 @@ class EmailController extends Controller
 
         return view("/email/emailframe",
             [
-                'partialview'=> 'table'
+                'partialview'=> 'table',
+                'params'=> []
             ]
         );
     }
@@ -128,8 +136,20 @@ class EmailController extends Controller
 
         return view("/email/emailframe",
             [
-                'partialview'=> 'compose'
+                'partialview'=> 'compose',
+                'params'=> []
             ]
         );
     }
+
+    public function detail(Request $request, $id){
+        return view("/email/emailframe",
+            [
+                'partialview'=> 'detail',
+                'params'=> ['id'=>$id]
+            ]
+        );
+    }
+
+
 }
