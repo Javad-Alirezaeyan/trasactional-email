@@ -14,11 +14,11 @@ define("EmailNotDelivered", 3);
 define("EmailBounced", 4);
 return [
   'EmailState'=>[
-      EmailQueued => ['Title'=>'Queued'],
-      EmailSent => ['Title'=>'Sent'],
-      EmailDelivered => ['Title'=>'Delivered'],
-      EmailNotDelivered => ['Title'=>'NotDelivered'],
-      EmailBounced => ['Title'=>'Bounced'],
+      EmailQueued => ['Title'=>'Queued', 'ColorClass'=>'text-warning'],
+      EmailSent => ['Title'=>'Sent', 'ColorClass'=>'text-info'],
+      EmailDelivered => ['Title'=>'Delivered', 'ColorClass'=>'text-success'],
+      EmailNotDelivered => ['Title'=>'NotDelivered', 'ColorClass'=>'text-danger'],
+      EmailBounced => ['Title'=>'Bounced', 'ColorClass'=>'text-inverse'],
   ]
 
 ];
