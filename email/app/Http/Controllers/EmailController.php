@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Email;
+use App\Http\Resources\Email as EmailResource;
+use App\Http\Resources\EmailCollection ;
 
 
 class EmailController extends Controller
@@ -24,7 +26,13 @@ class EmailController extends Controller
      */
     public function index()
     {
-        return Email::all();
+        $response = new ResponseObject();
+
+        $response->status = $response::status_ok;
+        $response->code = $response::code_ok;
+        $response->result = Email::all();
+        $response->result = new EmailCollection(Email::all());
+        return Response::json($response);
     }
 
     /**
@@ -53,7 +61,7 @@ class EmailController extends Controller
         $validator = Validator::make($request->all(), [
             'to' => 'required|min:6',
             'subject' => 'required',
-            'from' => 'required',
+            'from' => 'required|email',
             'contentValue' => 'required',
         ]);
         //validation input
@@ -83,7 +91,7 @@ class EmailController extends Controller
             SendEmailJob::dispatch($obj)->delay(now()->addSecond(5));// the job will be access to process after 5 seconds
             $response->status = $response::status_ok;
             $response->code = $response::code_ok;
-            $response->result = ['Message'=>"Queued"];
+            $response->message = "Queued";
         }
 
 
@@ -92,7 +100,7 @@ class EmailController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $email = Email::findOrFail($id);
+        $email = Email::find($id);
         $email->delete();
         return 204;
     }
