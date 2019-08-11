@@ -18,13 +18,12 @@ class ResponseObject
     const code_unauthorized = 403;
     const code_not_found = 404;
     const code_error = 500;
+    public $status = "";
 
-    public $status;
+    public $code = "";
 
-    public $code;
-
-    public $message;
+    public $message ="";
     public $errors = [];
-    public $result =[];
+    public $result = "";
 
 }
