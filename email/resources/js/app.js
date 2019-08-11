@@ -30,6 +30,7 @@ var axios = require('axios');
 
 Vue.component('table-email', require('./components/TableEmail.vue').default);
 Vue.component('compose-email', require('./components/Compose.vue').default);
+Vue.component('detail-email', require('./components/EmailDetail.vue').default);
 
 
 /**
