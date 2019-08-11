@@ -23,7 +23,7 @@ class Email extends JsonResource
             'subject'=> $this->email_subject,
             'to' =>$this->email_to,
             'from'=> $this->email_from,
-            'stateTitle' => $state[$this->email_state]['Title'],
+            'stateInfo' => $state[$this->email_state],
             'state' => $this->email_state,
             'content'=> $this->email_contentValue,
             'contentType'=> $this->email_contentType,
