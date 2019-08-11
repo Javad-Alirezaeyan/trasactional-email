@@ -17,10 +17,9 @@
 <script src="{{asset("theme/horizontal/js/sidebarmenu.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/sparkline/jquery.sparkline.min.js")}} " ></script>
-<script src="{{asset("theme/horizontal/js/custom.min.js")}} " ></script>
+
 <script src="{{asset("theme/assets/plugins/switchery/dist/switchery.min.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js")}} " ></script>
-<script src="{{asset("theme/assets/plugins/sparkline/jquery.sparkline.min.js")}} " ></script>
 
 <script src="{{asset("theme/assets/plugins/d3/d3.min.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/moment/moment.js")}} " ></script>
@@ -38,6 +37,9 @@
 <script src="{{ asset("theme/assets/plugins/sweetalert/sweetalert.min.js") }}"></script>
 <script src="{{ asset("theme/assets/plugins/sweetalert/jquery.sweet-alert.custom.js") }}"></script>
 <script src="{{ asset("theme/assets/plugins/styleswitcher/jQuery.style.switcher.js") }}"></script>
+<script src="{{asset("theme/horizontal/js/custom.js")}} " ></script>
+
+
 <script src="{{ asset("js/function.js") }}"></script>
 
 
