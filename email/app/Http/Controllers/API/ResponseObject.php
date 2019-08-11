@@ -27,5 +27,4 @@ class ResponseObject
     public $errors = [];
     public $result =[];
 
-
 }
