@@ -86,7 +86,7 @@ class EmailController extends Controller
             $obj->email_contentType =  $request->input('contentType', 'text/html');
             $obj->email_contentValue =  $content;
             $obj->email_orginalContent =  $request->contentValue;
-            $obj->email_state =  0;
+            $obj->email_state = EmailQueued;
             $obj->save();
 
             // create an email job and assign to dispatch

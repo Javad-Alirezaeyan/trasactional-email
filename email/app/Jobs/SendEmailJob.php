@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Email;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -37,6 +38,11 @@ class SendEmailJob implements ShouldQueue
         if($objEmail){
             list($res, $msg) = $objEmail->sendEmail($sender->email_subject, $sender->email_contentValue,
                 explode(',', $sender->email_to) ,$sender->email_from, $sender->email_contentType);
+            if($res){
+                $email = Email::find($sender.email_id);
+                $email->state = EmailSent;
+                $email->save();
+            }
         }
         else{
             //all services are unavailable
@@ -45,4 +51,6 @@ class SendEmailJob implements ShouldQueue
 
 
     }
+
+
 }
