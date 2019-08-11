@@ -23,8 +23,9 @@ class ResponseObject
 
     public $code;
 
-    public $messages = [];
+    public $message;
     public $errors = [];
+    public $result =[];
 
-    public $result = [];
+
 }
