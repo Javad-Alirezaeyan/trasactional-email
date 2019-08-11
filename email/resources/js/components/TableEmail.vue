@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-bind:key="email.email_id" v-for="email in emails">
+        <tr v-bind:key="email.id" v-for="email in emails">
             <td style="width:40px">
                 <div class="checkbox">
                     <input id="checkbox0" type="checkbox" value="check">
@@ -21,12 +21,12 @@
                 </div>
             </td>
             <td class="hidden-xs-down" style="width:40px"><i class="fa fa-star-o"></i></td>
-            <td class="hidden-xs-down">{{ email.email_to }}</td>
-            <td class="hidden-xs-down">{{ email.email_from }}</td>
-            <td class="hidden-xs-down">{{ email.email_subject }}</td>
-            <td class="hidden-xs-down">{{ email.email_contentValue }}</td>
-            <td class="text-right"> {{ email.createdat}}</td>
-            <td class="hidden-xs-down">{{ email.email_state }}</td>
+            <td class="hidden-xs-down">{{ email.to }}</td>
+            <td class="hidden-xs-down">{{ email.from }}</td>
+            <td class="hidden-xs-down">{{ email.subject }}</td>
+            <td class="hidden-xs-down">{{ email.content }}</td>
+            <td class="text-right"> {{ email.date}}</td>
+            <td class="hidden-xs-down">{{ email.state }}</td>
 
         </tr>
         </tbody>
@@ -62,7 +62,7 @@
                 fetch("api/all")
                     .then(res => res.json())
                     .then(res => {
-                        console.log(res);
+                       // console.log(res);
                         this.emails = res;
                     })
             }
