@@ -65,7 +65,8 @@
                             </div>
                         </div>
                     </div>
-                    @include('email.'. $partialview)
+
+                    <?php echo view('email.'. $partialview)->with(['params'=>$params]); ?>
                 </div>
             </div>
         </div>

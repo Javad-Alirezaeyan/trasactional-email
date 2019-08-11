@@ -98,9 +98,9 @@
                     contentValue : this.content,
                     contentType :  "text/plain"
                 };
-                console.log(senddata);
+              // /  console.log(senddata);
                 $.ajax({
-                    url: "api/sendEmail",
+                    url: "api/email",
                     type: 'post',
                     data: senddata,
                     dataType: 'json',
