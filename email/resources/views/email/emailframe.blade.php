@@ -49,7 +49,7 @@
                                     <a href="/star"> <i class="mdi mdi-star"></i> Starred </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="/draft"> <i class="mdi mdi-send"></i> Draft </a><span class="badge badge-danger ml-auto">3</span></li>
+                                    <a href="/draft"> <i class="mdi mdi-send"></i> Draft </a><span class="badge badge-danger ml-auto">0</span></li>
 
                                 <li class="list-group-item">
                                     <a href="/trash"> <i class="mdi mdi-delete"></i> Trash </a>
@@ -66,7 +66,7 @@
                         </div>
                     </div>
 
-                    <?php echo view('email.'. $partialview)->with(['params'=>$params]); ?>
+                    <?php  echo view('email.'. $partialview)->with(['params'=>$params]); ?>
                 </div>
             </div>
         </div>
