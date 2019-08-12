@@ -4,6 +4,10 @@ namespace App\Jobs;
 
 use App\Email;
 use Illuminate\Bus\Queueable;
+use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Queue\Events\JobProcessed;
+use Illuminate\Queue\Events\JobProcessing;
+use Illuminate\Queue\Queue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,7 +16,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 class SendEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $tries = 5;
+    public $tries = 1;
 
     /**
      * Create a new job instance.
@@ -26,6 +30,33 @@ class SendEmailJob implements ShouldQueue
         $this->sender = $req;
     }
 
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Queue::failing(function (JobFailed $event) {
+            // $event->connectionName
+            // $event->job
+            // $event->exception
+        });
+        Queue::before(function (JobProcessing $event) {
+            // $event->connectionName
+            // $event->job
+            // $event->job->payload()
+        });
+
+        Queue::after(function (JobProcessed $event) {
+            // $event->connectionName
+            // $event->job
+            // $event->job->payload()
+        });
+    }
+
+
     /**
      * Execute the job.
      *
@@ -35,19 +66,21 @@ class SendEmailJob implements ShouldQueue
     {
         $sender = $this->sender;
         $objEmail = new \App\classes\EmailService();
+        $state = EmailNotSent;
         if($objEmail){
             list($res, $msg) = $objEmail->sendEmail($sender->email_subject, $sender->email_contentValue,
                 explode(',', $sender->email_to) ,$sender->email_from, $sender->email_contentType);
             if($res){
-                $email = Email::find($sender.email_id);
-                $email->state = EmailSent;
-                $email->save();
+                $state = EmailSent;
             }
         }
         else{
             //all services are unavailable
-
         }
+
+        $email = Email::find($sender->email_id);
+        $email->email_state = $state;
+        $email->save();
 
 
     }
