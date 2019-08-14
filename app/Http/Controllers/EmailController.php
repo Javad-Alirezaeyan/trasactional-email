@@ -110,12 +110,19 @@ class EmailController extends Controller
         return Response::json($response);
     }
 
-    public function delete(Request $request, $id)
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * this function deletes one or more emails, idList can be a list of id
+     */
+    public function delete(Request $request, $id):string
     {
         $bulkIdList = $request->input('idList', [$id]);
 
         $response = new ResponseObject();
         if(is_array($bulkIdList)){
+            // soft delete
             Email::updateBulk($bulkIdList, ['email_deleted'=> 1]);
             $response->status = 204;
             $response->code = $response::code_ok;
