@@ -1,72 +1,82 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+##Transactional Email Microservice
+A complete project to send  emails with Restful API
+### Introduction
+This service makes a confident service to transmit bulk email. This service uses multi online transactional email service 
+(such as Sendergrid, Mailjet, Mailgunn, Mailtrap, ... ) to deliver emails.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+The service is available on both API and UI.
 
-## About Laravel
+ This service has configured with Docker, so you can use it in your convenient platform. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+###My problem with some external services
+There are some problems  working  with external services, In the following you can see some of them:
+<ul>
+<li>This services has bounded the number of emails that you can send in each month, for example, Sendgrid service just allows you send 100 emails in each month freely </li>
+<li>None of the services  allow  you that get information about the state of each sent emails, I mean there is no way knowing if a special email is delivered, not-delivered or bounced. If you have promoted an account, 
+ the Sendgrid service only let you fetch information about your activity <a href="https://sendgrid.com/docs/for-developers/sending-email/getting-started-email-activity-api">[See this link]</a>.
+  So, in the web application, we can just see an email if queued in the database or sent to external service because of the mentioned reasons.
+  </li>
+<li>It seems,  accessing to Mailjet is access denied in my country because of some political reasons </li>
+</ul>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<b>Although connecting to the mentioned external services has been implemented, this service can only send an email by
+ Sendgrid API maximum of 100 emails each month. If you have any account on Sndergrid, you can change the authorization 
+  key in path /app/classes/Sendergrid.php</b>
 
-## Learning Laravel
+### Technical  
+Used techniques are presented in following:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Language:
+<ul>
+<li>PHP 7.2.*</li>
+<li>CSS3</li>
+<li>JS</li>
+<li>HTML5</li>
+</ul>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1400 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Framework and Library:
+<ul>
+<li>Laravel versin 5.8</li>
+<li>Vuejs</li>
+<li>Jquery</li>
+</ul>
 
-## Laravel Sponsors
+tools:
+<ul>
+<li>Docker</li>
+<li>Compose</li>
+<li>Git</li>
+</ul>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Other:
+<ul>
+<li>PHPUnit</li>
+<li>Object orinted</li>
+<li>SOLID</li>
+<li>Cache</li>
+<li>Queue Laravel</li>
+<li>psr-2</li>
+<li>facade in Laravel</>
+</ul>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+##description
+As mentioned above, the service uses verity of programming languages, frameworks, and tools, so it is 
+explained why they have been chosen in the following:
+#####Laravel and Vuejs
+ Laravel is one of the popular frameworks among PHP developers because it provides tones of services and facilities 
+ to make reliable projects. As well Vue.js is an open-source JavaScript framework for building user interfaces that helps you to create a strong application in front-end. These two frameworks are matching each other well.
+ 
+#####SOLID
+The service uses a few different external services to send emails, so there has implemented a structure based on object-oriented 
+and SOLID. These files are available in the path: /app/classes. First, it has created an interface that all services have to include the functions of the interface. Also, there the main class (/app/classes/EmailService.php)that determines which service must be selected as the email sender. In fact, this class gets an email from dispatcher and sends it calls the selected class for sending the email.
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+####PHPunit
+To test API in the back-end, the service uses PHPUnit. The related files are available in the path /test. The test includes checking all method in the API such as POST, GET, Delete, ...
+ Faker library is used to make fake data to test API. These files are available in path /database/factories
+ 
+ 
+ ####install 
+ 
