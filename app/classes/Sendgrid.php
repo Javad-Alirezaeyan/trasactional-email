@@ -11,6 +11,8 @@ namespace App\classes;
 
 class Sendgrid implements ExternalEmailInterface
 {
+
+    public $apiKey = "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";
     public function __construct()
     {
         
@@ -74,7 +76,7 @@ class Sendgrid implements ExternalEmailInterface
             CURLOPT_HTTPHEADER => array(
                 "Accept: application/json",
                 "Accept-Encoding: gzip, deflate",
-                "Authorization: Bearer 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",
+                "Authorization: Bearer ". $this->apiKey,
                 "Cache-Control: no-cache",
                 "Connection: keep-alive",
                 "Content-Length: $count",
