@@ -22,7 +22,7 @@ class EmailApiTest extends TestCase
                 'contentValue' => $email->email_contentValue,
             ];
 
-            $this->json('POST', 'api/sendEmail', $payload)
+            $this->json('POST', 'api/email', $payload)
                 ->assertStatus(200)->assertJson([
                     'status' => 'OK',
                     'code' => 200,
@@ -30,7 +30,6 @@ class EmailApiTest extends TestCase
                     'errors' =>[]
                 ]);
         }
-
     }
 
     public function testWrongMethod()
@@ -43,57 +42,103 @@ class EmailApiTest extends TestCase
             'contentValue' => "Hello takeaway",
         ];
 
-        $this->json('Get', 'api/sendEmail', $payload)
+        $this->json('Get2', 'api/email', $payload)
             ->assertStatus(404)->assertJson(['data' => 'Resource not found']);
-        $this->json('Post', 'api/all')
+        $this->json('Post1', 'api/all')
             ->assertStatus(404)->assertJson(['data' => 'Resource not found']);
-        $this->json('Get', 'api/test')
+        $this->json('Get1', 'api/test')
             ->assertStatus(404)->assertJson(['data' => 'Resource not found']);
 
     }
 
     public function testAllEmail()
     {
-        $email1 = factory(Email::class)->create([
-            'email_subject' => 'Test 1',
-            'email_to' => 'reza@test.com, ali@example.com',
-            'email_from' => 'javad@example.com',
-            'email_contentValue' => "Hello world <b> test 1</b>",
-        ]);
+        $email1 = factory(Email::class)->create();
+        $email2 = factory(Email::class)->create();
 
-        $email2 = factory(Email::class)->create([
-            'email_subject' => 'Test 2',
-            'email_to' => 'rezaaaaaaa@test.com, aaaaaaaaaali@example.com',
-            'email_from' => 'javaddddddd@example.com',
-            'email_contentValue' => "Hello world <b> test 2</b>",
-        ]);
-
-         $this->json('get', 'api/all')
+         $this->json('get', 'api/email')
             ->assertJsonFragment([
                 [
                     'id'=> $email1->email_id,
-                    'subject' => 'Test 1',
-                    'to' => 'reza@test.com, ali@example.com',
-                    'from' => 'javad@example.com',
-                    "state" =>$email1->email_state,
-                    'content' => "Hello world <b> test 1</b>",
+                    'subject' => $email1->email_subject,
+                    'to' => $email1->email_to,
+                    'from' => $email1->email_from,
+                    "stateInfo"=>[
+                        "Title" => 'Queued',
+                        'ColorClass'=> 'label-warning'
+                    ],
+                    "state" =>$email2->email_state,
+                    'content' => $email1->email_contenetValue,
                     'contentType' => $email1->email_contentType,
-                   // "date"=> $email1.created_at
+                    "date"=> $email1->created_at
                 ],
                 [
                     'id'=> $email2->email_id,
-                    'subject' => 'Test 2',
-                    'to' => 'rezaaaaaaa@test.com, aaaaaaaaaali@example.com',
-                    'from' => 'javaddddddd@example.com',
+                    'subject' => $email2->email_subject,
+                    'to' => $email2->email_to,
+                    'from' => $email2->email_from,
+                    "stateInfo"=>[
+                        "Title" => 'Queued',
+                        'ColorClass'=> 'label-warning'
+                    ],
                     "state" =>$email2->email_state,
-                    'content' => "Hello world <b> test 2</b>",
+                    'content' => $email1->email_contenValue,
                     'contentType' => $email2->email_contentType,
-                    //"date"=> $email2.created_at
+                    "date"=> $email2->created_at
                 ]
             ]);
     }
 
 
+    /**
+     *
+     */
+    public function testDetailMethod()
+    {
+
+        $email = factory(Email::class)->create();
+
+        $this->json('Get', 'api/email/'.$email->email_id)
+            ->assertStatus(200)->assertJsonFragment([
+                'status' => 'OK',
+                'code' => 200,
+                'message' => '',
+                'errors' =>[],
+                'result' =>
+                    [
+                        'id' => $email->email_id,
+                        'subject' => $email->email_subject,
+                        'to' => $email->email_to,
+                        'from' => $email->email_from,
+                        'stateInfo' =>
+                            array (
+                                'Title' => 'Queued',
+                                'ColorClass' => 'label-warning',
+                            ),
+                        'state' => 0,
+                        'content' => $email->email_contentValue,
+                        'contentType' => 'text/html',
+                        'date' => $email->created_at,
+                    ],
+            ]);
+
+    }
+
+    public function testDeleteMethod()
+    {
+        $email = factory(Email::class)->create();
+
+        $this->json('Delete', 'api/email/'.$email->email_id)
+            ->assertStatus(200)->assertJson(array (
+                'status' => 204,
+                'code' => 200,
+                'message' => '',
+                'errors' =>
+                    array (
+                    ),
+                'result' => '',
+            ));
+    }
 
 
 }
