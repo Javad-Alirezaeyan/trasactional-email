@@ -14,9 +14,8 @@ class EmailService
     private $slctEmailService = null;
     public function __construct()
     {
-        $this->emailServices = [  0=> new Sendgrid(), 1=> new Mailjet()];
-
-        //find first the email service that is available from the above list
+        $this->emailServices = [  0=> new Sendgrid(), 1=> new Sparkpost(), 2=>new Mailtrap()];
+        //find first the email service that is available is selected from the above list
         foreach($this->emailServices as $es){
             if($es->isAvailable()){
                 $this->slctEmailService = $es;
