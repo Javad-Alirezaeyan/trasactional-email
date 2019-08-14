@@ -1,9 +1,9 @@
-##Transactional Email Microservice
+<h2>Transactional Email Microservice</h2>
 
 
 A complete project to send  emails with Restful API
 
-### Introduction
+<h3>Introduction</h3>
 This service makes a confident service to transmit bulk email. This service uses multi online transactional email service 
 (such as Sendergrid, Mailjet, Mailgunn, Mailtrap, ... ) to deliver emails.
 
@@ -15,7 +15,7 @@ The service is available on both
  This service has configured with Docker, so you can use it in your convenient platform. 
 
 
-###My problem with some external services
+<h3>My problem with some external services</h3>
 
 There are some problems  working  with external services, In the following you can see some of them:
 <ul>
@@ -32,7 +32,7 @@ There are some problems  working  with external services, In the following you c
   key in path /app/classes/Sendergrid.php</b>
 
 <hr />
-### Technical  
+<h4> Technical</h4>  
 Used techniques are presented in following:
 
 Language:
@@ -70,27 +70,27 @@ Other:
 
 <hr />
 
-##description
+<h3>description</h3>
 
 As mentioned above, the service uses verity of programming languages, frameworks, and tools, so it is 
 explained why they have been chosen in the following:
 
-#####Laravel and Vuejs
+<h4>Laravel and Vuejs</h4>
 
  Laravel is one of the popular frameworks among PHP developers because it provides tones of services and facilities 
  to make reliable projects. As well Vue.js is an open-source JavaScript framework for building user interfaces that helps you to create a strong application in front-end. These two frameworks are matching each other well.
  
-#####SOLID
+<h4>SOLID</h4>
 
 The service uses a few different external services to send emails, so there has implemented a structure based on object-oriented 
 and SOLID. These files are available in the path: /app/classes. First, it has created an interface that all services have to include the functions of the interface. Also, there the main class (/app/classes/EmailService.php)that determines which service must be selected as the email sender. In fact, this class gets an email from dispatcher and sends it calls the selected class for sending the email.
 
-####PHPUnit
+<h4>HPUnit</h4>
 
 To test API in the back-end, the service uses PHPUnit. The related files are available in the path /test. The test includes checking all method in the API such as POST, GET, Delete, ...
  Faker library is used to make fake data to test API. These files are available in path /database/factories
  
  <hr/>
  
- ####install 
+<h3>install</h3> 
  
