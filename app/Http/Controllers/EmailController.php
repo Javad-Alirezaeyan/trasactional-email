@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\classes\EmailService;
 use App\Http\Controllers\API\ResponseObject;
 use App\Http\Requests\SendEmailValidator;
 use App\Jobs\SendEmailJob;
@@ -81,6 +82,7 @@ class EmailController extends Controller
             // parse content, for example: MARKDOWN converts to HTML
             $objParse  = new Parsemarkdown();
             $content =  $objParse->text($request->contentValue);
+
             // save record to db
             $obj = new Email();
             $obj->email_subject =  $request->subject;
@@ -94,6 +96,13 @@ class EmailController extends Controller
 
             // create an email job and assign to dispatch
             SendEmailJob::dispatch($obj)->delay(now()->addSecond(5));// the job will be access to process after 5 seconds
+            /*$objEmail = new EmailService();
+            list($res, $msg) = $objEmail->sendEmail($obj->email_subject, $obj->email_contentValue,
+                explode(',', $obj->email_to) ,$obj->email_from, $obj->email_contentType);
+            if($res){
+                $state = EmailSent;
+            }*/
+
             $response->status = $response::status_ok;
             $response->code = $response::code_ok;
             $response->message = "Queued";
@@ -103,15 +112,20 @@ class EmailController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $bulkIdList = $request->input('idList', "[$id]");
-//        var_dump($bulkIdList); exit;
+        $bulkIdList = $request->input('idList', [$id]);
+
+        $response = new ResponseObject();
         if(is_array($bulkIdList)){
             Email::updateBulk($bulkIdList, ['email_deleted'=> 1]);
+            $response->status = 204;
+            $response->code = $response::code_ok;
         }
-        $response = new ResponseObject();
-        $response->status = 204;
-        $response->code = $response::code_ok;
-        $response->message = "Queued";
+        else{
+            $response->status = $response::status_failed;
+            $response->code = $response::code_failed;
+            $response->message = "'Id' is not valid";
+        }
+
         return Response::json($response);
     }
 
