@@ -7,12 +7,15 @@
  */
 
 
-define("EmailQueued", 0);
-define("EmailNotSent", 1);
-define("EmailSent", 2);
-define("EmailDelivered", 3);
-define("EmailNotDelivered", 4);
-define("EmailBounced", 5);
+
+
+if (!defined('EmailQueued')) define("EmailQueued", 0);
+if (!defined('EmailNotSent')) define("EmailNotSent", 1);
+if (!defined('EmailSent')) define("EmailSent", 2);
+if (!defined('EmailNotDelivered'))define("EmailNotDelivered", 4);
+if (!defined('EmailDelivered'))define("EmailDelivered", 3);
+if (!defined('EmailBounced')) define("EmailBounced", 5);
+
 return [
   'EmailState'=>[
       EmailQueued => ['Title'=>'Queued', 'ColorClass'=>'label-warning'],
