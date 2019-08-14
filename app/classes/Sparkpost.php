@@ -18,8 +18,9 @@ class Sparkpost implements ExternalEmailInterface
         //convert receiver format
         $to2 =[];
         foreach ($to as $email){
-            $to2[]['address'] = $email;
+            $to2[]['address'] = ['email' => $email];
         }
+
         $params =array (
             'options' =>
                 array (
@@ -31,7 +32,7 @@ class Sparkpost implements ExternalEmailInterface
                     'subject' => $subject,
                     'text' => $contentValue,
                 ),
-            'recipients' => $to2,
+            'recipients' =>$to,
         );
 
         $res = $this->sendToApi(json_encode($params));
@@ -82,10 +83,11 @@ class Sparkpost implements ExternalEmailInterface
             ),
         ));
 
+
         $response = curl_exec($curl);
         $err = curl_error($curl);
-
         curl_close($curl);
+
 
         if ($err) {
             //save a log
