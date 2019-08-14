@@ -95,20 +95,23 @@ To test API in the back-end, the service uses PHPUnit. The related files are ava
 <h3>install</h3> 
  
  1. Clone the source code from github repository. To do that open terminal and type the following command:
-  
-    
+  <code>
     git clone https://github.com/javad86/trasactional-email.git
+    </code>
           
- 2. Run the following command to add nginx, mysql and laravel project to the containers of docker
- 
-    
+ 2. Run the following command to install nginx, mysql and laravel project to the containers of docker
+     
+     <code>
     docker-compose up -d
+    </code>
     
  3. Now, the necessary files and software has been installed on your computer. Type the following code to see container on docker service:
  
- 
+    <code>
     docker-compose ps
+    </code>
 you should see something like the following  text after running the above command:
+<code>
  
     CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                                      NAMES
     
@@ -117,5 +120,7 @@ you should see something like the following  text after running the above comman
     c583fd40ab38        digitalocean.com/php   "docker-php-entrypoi…"   14 hours ago        Up 9 minutes        9000/tcp                                   app
     
     ea6aab48faf9        mysql:5.7.22           "docker-entrypoint.s…"   14 hours ago        Up 9 minutes        0.0.0.0:3306->3306/tcp                     db
+    
+   </code>
 
 4. Now, you can launch the laravel project with the following command: 
