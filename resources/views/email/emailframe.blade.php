@@ -39,20 +39,20 @@
             <div class="card">
                 <div class="row">
                     <div class="col-xlg-2 col-lg-4 col-md-4">
-                        <div class="card-block inbox-panel"><a href="compose" class="btn btn-danger m-b-20 p-10 btn-block waves-effect waves-light">Compose</a>
+                        <div class="card-block inbox-panel"><a href="{{ url("/") }}/compose" class="btn btn-danger m-b-20 p-10 btn-block waves-effect waves-light">Compose</a>
                             <ul class="list-group list-group-full">
                                 <!-- <li class="list-group-item active"> <a href="javascript:void(0)"><i class="mdi mdi-gmail"></i> Inbox </a><span class="badge badge-success ml-auto">6</span></li>-->
                                 <li class="list-group-item ">
                                     <a href="/"> <i class="mdi mdi-file-document-box"></i> Sent Mail </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="/star"> <i class="mdi mdi-star"></i> Starred </a>
+                                    <a href="{{ url("/") }}star"> <i class="mdi mdi-star"></i> Starred </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="/draft"> <i class="mdi mdi-send"></i> Draft </a><span class="badge badge-danger ml-auto">0</span></li>
+                                    <a href="{{ url("/") }}/draft"> <i class="mdi mdi-send"></i> Draft </a><span class="badge badge-danger ml-auto">0</span></li>
 
                                 <li class="list-group-item">
-                                    <a href="/trash"> <i class="mdi mdi-delete"></i> Trash </a>
+                                    <a href="{{ url("/") }}/trash"> <i class="mdi mdi-delete"></i> Trash </a>
                                 </li>
                             </ul>
                             <h3 class="card-title m-t-40">Labels</h3>

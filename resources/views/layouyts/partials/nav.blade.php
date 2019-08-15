@@ -6,13 +6,13 @@
         <ul id="sidebarnav">
             <li class="nav-small-cap">Takeaway</li>
             <li>
-                <a class="has-arrow" href="/" aria-expanded="false">
+                <a class="has-arrow" href="{{ url("/") }}" aria-expanded="false">
                     <i class="mdi mdi-email"></i>
                     Email List
                 </a>
             </li>
             <li>
-                <a class="has-arrow" href="/compose" aria-expanded="false">
+                <a class="has-arrow" href="{{ url("/") }}/compose" aria-expanded="false">
                     <i class="mdi mdi-compass-outline"></i>
                    Compose
                 </a>
