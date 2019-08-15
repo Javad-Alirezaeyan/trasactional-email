@@ -99,8 +99,8 @@ To test API in the back-end, the service uses PHPUnit. The related files are ava
     git clone https://github.com/javad86/trasactional-email.git
     </code>
           
- 2. Run the following command to install nginx, mysql and laravel project to the containers of docker
-     
+ 2. Then, open the trasactional-email directory with command: <code>cd trasactional-email/</code>
+  and run the following command to build nginx, mysql and laravel project to the containers of docker
      <code>
     docker-compose up -d
     </code>
@@ -163,7 +163,7 @@ you should see something like the following  text after running the above comman
   docker-compose exec app php artisan migrate
   </code>
  
- then, you have to see:
+ then, you must see:
      
      Migrating: 2019_08_12_175201_create_emails_table
      Migrated:  2019_08_12_175201_create_emails_table (0.08 seconds)
