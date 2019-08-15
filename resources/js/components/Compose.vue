@@ -61,7 +61,7 @@
 
             validation(){
                 //validate form
-                let to = ($("#to").val()).split(',');
+                let to = ($("#to").val().replace(/ /g,'')).split(',');
                 console.log(to);
                 let valid =  true;
                 this.errors = [];
