@@ -96,12 +96,22 @@ class EmailController extends Controller
 
             // create an email job and assign to dispatch
             SendEmailJob::dispatch($obj)->delay(now()->addSecond(5));// the job will be access to process after 5 seconds
-            /*$objEmail = new EmailService();
-            list($res, $msg) = $objEmail->sendEmail($obj->email_subject, $obj->email_contentValue,
-                explode(',', $obj->email_to) ,$obj->email_from, $obj->email_contentType);
-            if($res){
-                $state = EmailSent;
-            }*/
+
+           /* $state = EmailNotSent;
+            $indexEmailService = 0;
+            $res = false;
+            do{
+                $objEmail = new \App\classes\EmailService($indexEmailService);
+                $srvAvailable = $objEmail->serviceIsAvailable();
+                if($srvAvailable){
+                    list($res, $msg) = $objEmail->sendEmail($obj->email_subject, $obj->email_contentValue,
+                        explode(',', $obj->email_to) ,$obj->email_from, $obj->email_contentType);
+                    if($res){
+                        $state = EmailSent;
+                    }
+                }
+                $indexEmailService++;
+            }while($srvAvailable && !$res);*/
 
             $response->status = $response::status_ok;
             $response->code = $response::code_ok;
