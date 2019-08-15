@@ -111,7 +111,7 @@
                             //show confirmation
                             alert("Email queued, It will send in one minute");
                             var baseUrl = window.Laravel.baseUrl;
-                            window.Location = baseUrl;
+                            window.location.href  = baseUrl;
                            /* $.toast({
                                 heading: 'success',
                                 text: 'Email queued, It will send in one minute',

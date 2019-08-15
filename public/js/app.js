@@ -1750,7 +1750,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     validation: function validation() {
       //validate form
-      var to = $("#to").val().split(',');
+      var to = $("#to").val().replace(/ /g, '').split(',');
       console.log(to);
       var valid = true;
       this.errors = [];
@@ -1802,7 +1802,7 @@ __webpack_require__.r(__webpack_exports__);
           //show confirmation
           alert("Email queued, It will send in one minute");
           var baseUrl = window.Laravel.baseUrl;
-          window.Location = baseUrl;
+          window.location.href = baseUrl;
           /* $.toast({
                heading: 'success',
                text: 'Email queued, It will send in one minute',
