@@ -12,11 +12,12 @@ class EmailService
 {
     private $emailServices = [];
     private $slctEmailService = null;
-    public function __construct()
+    public function __construct($index=0)
     {
         $this->emailServices = [  0=> new Sendgrid(), 1 => new Mailjet(), 2=> new Sparkpost()];
         //find first the email service that is available is selected from the above list
-        foreach($this->emailServices as $es){
+        for($i=$index; $i < count($this->emailServices); $i++){
+            $es = $this->emailServices[$i];
             if($es->isAvailable()){
                 $this->slctEmailService = $es;
                 break;
@@ -24,7 +25,6 @@ class EmailService
         }
         
         // if all the email services are unavailable, we return null
-        return  $this->slctEmailService ? $this : null;
     }
 
     /**
@@ -49,6 +49,11 @@ class EmailService
         return  $this->slctEmailService->send($subject, $contentValue, $contentType, $receivers, $from);
     }
 
+
+    public function serviceIsAvailable()
+    {
+        return   $this->slctEmailService == null ? false : true;
+    }
     /**
      * @param $id
      * @return mixed

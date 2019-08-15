@@ -84,12 +84,14 @@ class Sparkpost implements ExternalEmailInterface
         ));
 
 
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $response = curl_exec($curl);
+
         $err = curl_error($curl);
+
         curl_close($curl);
 
-
-        if ($err) {
+        if ($err || $httpcode != 200) {
             //save a log
             return false;
         } else {
