@@ -11,6 +11,7 @@
 
 
         <div class="form-group">
+            <p>please hit enter buttn, if you want to insert more than one email</p>
             <input class="form-control" id="to" data-role="tagsinput"  v-model="to"  placeholder="To:">
         </div>
         <div class="form-group">
@@ -47,10 +48,10 @@
         data() {
 
             return {
-                subject: 'Hello',
-                content: 'Test',
-                from : 'a@gmail.com',
-                to: 'a@gmail.com',
+                subject: '',
+                content: '',
+                from : '',
+                to: '',
                 errors: []
             };
 
@@ -109,6 +110,8 @@
                         if (xhr.status == 200){
                             //show confirmation
                             alert("Email queued, It will send in one minute");
+                            var baseUrl = window.Laravel.baseUrl;
+                            window.Location = baseUrl;
                            /* $.toast({
                                 heading: 'success',
                                 text: 'Email queued, It will send in one minute',
@@ -135,6 +138,3 @@
 
 </script>
 
-<style scoped>
-
-</style>
