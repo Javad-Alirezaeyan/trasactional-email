@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\classes\EmailService;
 use App\Email;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\Events\JobFailed;
@@ -65,21 +66,26 @@ class SendEmailJob implements ShouldQueue
     public function handle()
     {
         $sender = $this->sender;
-        $objEmail = new \App\classes\EmailService();
         $state = EmailNotSent;
-        if($objEmail){
-            list($res, $msg) = $objEmail->sendEmail($sender->email_subject, $sender->email_contentValue,
-                explode(',', $sender->email_to) ,$sender->email_from, $sender->email_contentType);
-            if($res){
-                $state = EmailSent;
+        $indexEmailService = 0;
+        $res = false;
+        do{
+            $objEmail = new EmailService($indexEmailService);
+            $srvAvailable = $objEmail->serviceIsAvailable();
+            if($srvAvailable){
+                list($res, $msg) = $objEmail->sendEmail($sender->email_subject, $sender->email_contentValue,
+                    explode(',', $sender->email_to) ,$sender->email_from, $sender->email_contentType);
+                if($res){
+                    $state = EmailSent;
+                }
             }
-        }
-        else{
-            //all services are unavailable
-        }
+            $indexEmailService++;
+        }while($srvAvailable && !$res);
+
 
         $email = Email::find($sender->email_id);
         $email->email_state = $state;
+        $email->email_service = $indexEmailService - 1;
         $email->save();
 
 
