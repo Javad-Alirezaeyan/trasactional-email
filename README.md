@@ -105,13 +105,23 @@ To test API in the back-end, the service uses PHPUnit. The related files are ava
     docker-compose up -d
     </code>
     
+    you should see printed comments in the following:
+       <code>
+       Creating app       ... done
+       
+       Creating webserver ... done
+       
+       Creating db        ... done
+       </code> 
+    
  3. Now, the necessary files and software has been installed on your computer. Type the following code to see container on docker service:
  
     <code>
     docker-compose ps
     </code>
 you should see something like the following  text after running the above command:
-<code>
+
+
  
     CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                                      NAMES
     
@@ -120,7 +130,59 @@ you should see something like the following  text after running the above comman
     c583fd40ab38        digitalocean.com/php   "docker-php-entrypoi…"   14 hours ago        Up 9 minutes        9000/tcp                                   app
     
     ea6aab48faf9        mysql:5.7.22           "docker-entrypoint.s…"   14 hours ago        Up 9 minutes        0.0.0.0:3306->3306/tcp                     db
-    
-   </code>
 
-4. Now, you can launch the laravel project with the following command: 
+
+
+
+ 4. You can now modify the .env file on the app container to include specific details about your setup.
+    
+  Open the file using <code>docker-compose exec</code>, which allows you to run specific commands in containers.
+   In this case, you are opening the file for editing:
+  
+  <ul>
+  <li><code>DB_HOST</code> will be your <code>db</code> database container. </li>
+  <li><code>DB_DATABASE</code> will be the <code><span class="highlight">email</span></code> database. </li>
+  <li><code>DB_USERNAME</code> will be the username you will use for your database. In this case, we will use <code><span class="highlight">root</span></code>. </li>
+  <li><code>DB_PASSWORD</code> will be the secure password you would like to use for this user account. the default password is <code>qaz</code> </li>
+  </ul>
+  
+  <pre class="code-pre "><code langs="">
+  DB_CONNECTION=mysql
+  DB_HOST=<span class="highlight">db</span>
+  DB_PORT=3306
+  DB_DATABASE=<span class="highlight">email</span>
+  DB_USERNAME=<span class="highlight">root</span>
+  DB_PASSWORD=<span class="highlight">qaz</span>
+  </code></pre>
+  
+  Save your changes and exit your editor. 
+  
+  5. You now run migrate command to create tables: 
+  
+  <code>
+  docker-compose exec app php artisan migrate
+  </code>
+ 
+ then, you have to see:
+     
+     Migrating: 2019_08_12_175201_create_emails_table
+     Migrated:  2019_08_12_175201_create_emails_table (0.08 seconds)
+     Migrating: 2019_08_12_175201_create_failed_jobs_table
+     Migrated:  2019_08_12_175201_create_failed_jobs_table (0.07 seconds)
+     Migrating: 2019_08_12_175201_create_jobs_table
+     Migrated:  2019_08_12_175201_create_jobs_table (0.13 seconds)
+     Migrating: 2019_08_12_175201_create_password_resets_table
+     Migrated:  2019_08_12_175201_create_password_resets_table (0.08 seconds)
+     Migrating: 2019_08_12_175201_create_users_table
+     Migrated:  2019_08_12_175201_create_users_table (0.1 seconds)
+ 
+ 
+ 6. To run queued work  this command must be run: 
+  <code>
+   docker-compose exec app php artisan queue:listen
+  </code>
+  It is better we define a cron job for this command when we export the  project
+  
+ As a final step, visit http://your_server_ip:port in the browser. 
+ API will be accessible in  http://your_server_ip:port/api/<request>, 
+ for more detail about API <a target="_blank" href="https://documenter.getpostman.com/view/1601502/SVYxnFT2?version=latest#5e927dcd-b917-458b-82ac-47a09703429f" > click here</a> 
