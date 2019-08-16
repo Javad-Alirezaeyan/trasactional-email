@@ -7,7 +7,7 @@ services:
       context: ./
       dockerfile: app.dockerfile
     working_dir: /var/www
-    container_name: app1
+    container_name: app
     volumes:
       - ./:/var/www
     environment:
@@ -20,7 +20,7 @@ services:
       context: ./
       dockerfile: web.dockerfile
     working_dir: /var/www
-    container_name: webserver1
+    container_name: webserver
     volumes_from:
       - app
     ports:
@@ -29,7 +29,7 @@ services:
   # The Database
   database:
     image: mysql:5.7.22
-    container_name: db1
+    container_name: db
     volumes:
       - dbdata:/var/lib/mysql
     environment:
