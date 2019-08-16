@@ -45,9 +45,16 @@ class EmailController extends Controller
     public function show($id)
     {
         $response = new ResponseObject();
-        $response->status = $response::status_ok;
-        $response->code = $response::code_ok;
-        $response->result =  new EmailResource(Email::find($id));
+        if (Email::where('email_id', '=', $id)->exists()) {
+            // email found
+            $response->status = $response::status_ok;
+            $response->code = $response::code_ok;
+            $response->result =  new EmailResource(Email::find($id));
+        }
+        else{
+            $response->status = $response::status_failed;
+            $response->code = $response::code_failed;
+        }
         return Response::json($response);
     }
 
