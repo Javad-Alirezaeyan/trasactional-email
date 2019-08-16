@@ -157,6 +157,15 @@ you should see something like the following  text after running the above comman
   
   Save your changes and exit your editor. 
   
+  
+ the two commands needed would look like:
+ 
+  <code>
+  docker-compose exec app php artisan key:generate
+  
+  docker-compose exec app php artisan optimize
+  </code>
+  
   5. You now run migrate command to create tables: 
   
   <code>
@@ -184,12 +193,7 @@ you should see something like the following  text after running the above comman
   It is better we define a cron job for this command when we export the  project
   
  
- As a final step, run this code in the terminal:
  
- <code>
-   docker-compose exec app php artisan serve
- </code>
- 
- so, visit http://your_server_ip:port in the browser. 
- API will be accessible in  http://your_server_ip:port/api/<request>, 
+ As a final step,  visit http://your_server_ip:8080 in the browser. 
+ API is available  in  http://your_server_ip:8080/api/<request>, 
  for more detail about API <a target="_blank" href="https://documenter.getpostman.com/view/1601502/SVYxnFT2?version=latest#5e927dcd-b917-458b-82ac-47a09703429f" > click here</a> 
