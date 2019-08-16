@@ -9,6 +9,8 @@ services:
     image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
+    ports:
+      - "8000:8080"
     tty: true
     environment:
       SERVICE_NAME: app
