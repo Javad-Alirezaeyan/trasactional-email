@@ -1,53 +1,44 @@
-version: '3'
+version: '2'
 services:
 
-  #PHP Service
+  # The Application
   app:
     build:
-      context: .
-      dockerfile: Dockerfile
-    image: digitalocean.com/php
-    container_name: app
-    restart: unless-stopped
-    ports:
-      - "8000:8080"
-    tty: true
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
+      context: ./
+      dockerfile: app.dockerfile
     working_dir: /var/www
-    networks:
-      - app-network
-
-  #Nginx Service
-  webserver:
-    image: nginx:alpine
-    container_name: webserver
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "80:80"
-      - "443:443"
-    networks:
-      - app-network
-
-  #MySQL Service
-  db:
-    image: mysql:5.7.22
-    container_name: db
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3306:3306"
+    container_name: app1
+    volumes:
+      - ./:/var/www
     environment:
-      MYSQL_DATABASE: email
-      MYSQL_ROOT_PASSWORD: qaz
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    networks:
-      - app-network
+      - "DB_PORT=3306"
+      - "DB_HOST=database"
 
-#Docker Networks
-networks:
-  app-network:
-    driver: bridge
+  # The Web Server
+  web:
+    build:
+      context: ./
+      dockerfile: web.dockerfile
+    working_dir: /var/www
+    container_name: webserver1
+    volumes_from:
+      - app
+    ports:
+      - 8080:80
+
+  # The Database
+  database:
+    image: mysql:5.7.22
+    container_name: db1
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=email"
+      - "MYSQL_USER=root"
+      - "MYSQL_PASSWORD=qaz"
+      - "MYSQL_ROOT_PASSWORD=qaz"
+    ports:
+        - "33061:3306"
+
+volumes:
+  dbdata:
