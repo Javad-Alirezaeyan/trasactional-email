@@ -33,7 +33,7 @@ There are some problems  working  with external services, In the following you c
 
 <hr />
 <h4> Technical</h4>  
-Used techniques are presented in following:
+Used techniques are presented in the following:
 
 Language:
 <ul>
@@ -45,7 +45,7 @@ Language:
 
 Framework and Library:
 <ul>
-<li>Laravel versin 5.8</li>
+<li>Laravel version 5.8</li>
 <li>Vuejs</li>
 <li>Jquery</li>
 </ul>
@@ -183,6 +183,13 @@ you should see something like the following  text after running the above comman
   </code>
   It is better we define a cron job for this command when we export the  project
   
- As a final step, visit http://your_server_ip:port in the browser. 
+ 
+ As a final step, run this code in the terminal:
+ 
+ <code>
+   docker-compose exec app php artisan serve
+ </code>
+ 
+ so, visit http://your_server_ip:port in the browser. 
  API will be accessible in  http://your_server_ip:port/api/<request>, 
  for more detail about API <a target="_blank" href="https://documenter.getpostman.com/view/1601502/SVYxnFT2?version=latest#5e927dcd-b917-458b-82ac-47a09703429f" > click here</a> 
