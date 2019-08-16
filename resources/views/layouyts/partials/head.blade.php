@@ -36,7 +36,6 @@ $themePath = "theme/";
 <link href="{{asset("theme/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css")}}" rel="stylesheet">
 <link href="{{asset("theme/assets/plugins/multiselect/css/multi-select.css")}}" rel="stylesheet">
 <link href="{{asset("theme/horizontal/css/colors/blue.css")}}" rel="stylesheet">
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 
 
