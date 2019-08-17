@@ -95,15 +95,25 @@ To test API in the back-end, the service uses PHPUnit. The related files are ava
 <h3>install</h3> 
  
  1. Clone the source code from github repository. To do that open terminal and type the following command:
+  
   <code>
     git clone https://github.com/javad86/trasactional-email.git
     </code>
           
- 2. Then, open the trasactional-email directory with command: <code>cd trasactional-email/</code>
-  and run the following command to build nginx, mysql and laravel project to the containers of docker
-     <code>
+ 2. Then, open the trasactional-email directory with command: 
+ 
+ <code>cd trasactional-email </code>
+  
+  and run the following commands  to build nginx, mysql and laravel project to the containers of docker
+    
+  <code>
+        docker-compose build
+  </code>
+      
+  <code>
     docker-compose up -d
-    </code>
+  </code>
+  
     
     you should see printed comments in the following:
        <code>
@@ -116,7 +126,7 @@ To test API in the back-end, the service uses PHPUnit. The related files are ava
     
  3. Now, the necessary files and software has been installed on your computer. Type the following code to see container on docker service:
  
-    <code>
+ <code>
     docker-compose ps
     </code>
 you should see something like the following  text after running the above command:
@@ -136,7 +146,11 @@ you should see something like the following  text after running the above comman
 
  4. You can now modify the .env file on the app container to include specific details about your setup.
     
-  Open the file using <code>docker-compose exec</code>, which allows you to run specific commands in containers.
+  Open the file using 
+  
+  <code>docker-compose exec</code>, 
+  
+ which allows you to run specific commands in containers.
    In this case, you are opening the file for editing:
   
   <ul>
