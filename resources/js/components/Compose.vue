@@ -11,7 +11,7 @@
 
 
         <div class="form-group">
-            <p>please hit enter buttn, if you want to insert more than one email</p>
+            <p>please distract emails with coma (,) if you want to insert more than one email</p>
             <input class="form-control" id="to" data-role="tagsinput"  v-model="to"  placeholder="To:">
         </div>
         <div class="form-group">
