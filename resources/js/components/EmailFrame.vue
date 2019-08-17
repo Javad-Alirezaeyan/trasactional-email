@@ -3,7 +3,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="row">
-                        <div class="col-xlg-2 col-lg-4 col-md-4">
+                        <div class="col-xlg-2 col-lg-2 col-md-4">
                             <div class="card-block inbox-panel">
                                 <a href="#"  v-on:click="setCompose()" class="btn btn-danger m-b-20 p-10 btn-block waves-effect waves-light">Compose</a>
                                 <ul class="list-group list-group-full">
@@ -35,7 +35,7 @@
                             </div>
                         </div>
 
-                        <div id="frameContent" class="col-xlg-10 col-lg-8 col-md-8"   >
+                        <div id="frameContent" class="col-xlg-12 col-lg-10 col-md-8"   >
                             <div v-if="content == 0 ">
                                 <table-email  ref="tableemail"></table-email>
                             </div>
