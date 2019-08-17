@@ -14,7 +14,7 @@ Vue.use(DataTable);
 */
 
 
-var axios = require('axios');
+//var axios = require('axios');
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -28,9 +28,10 @@ var axios = require('axios');
 
 
 
-Vue.component('table-email', require('./components/TableEmail.vue').default);
+Vue.component('table-email',   require('./components/TableEmail.vue').default);
+Vue.component('frame-email',   require('./components/EmailFrame.vue').default);
 Vue.component('compose-email', require('./components/Compose.vue').default);
-Vue.component('detail-email', require('./components/EmailDetail.vue').default);
+Vue.component('detail-email',  require('./components/EmailDetail.vue').default);
 
 
 /**
