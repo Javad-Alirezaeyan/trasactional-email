@@ -109,19 +109,9 @@
                     .done(function (res, textStatus, xhr) {
                         if (xhr.status == 200){
                             //show confirmation
-                            alert("Email queued, It will send in one minute");
+                            alert("Your email was queued, It will send in one minute");
                             var baseUrl = window.Laravel.baseUrl;
                             window.location.href  = baseUrl;
-                           /* $.toast({
-                                heading: 'success',
-                                text: 'Email queued, It will send in one minute',
-                                position: 'top-right',
-                                loaderBg:'#ff6849',
-                                icon: 'info',
-                                hideAfter: 3500,
-                                stack: 6
-                            });*/
-
                         }
                         else{
                             this.errors = res.errors;

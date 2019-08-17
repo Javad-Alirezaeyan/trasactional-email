@@ -40,7 +40,8 @@
 <script>
     export default {
         name: "EmailDetail",
-        props:['id'],
+        props:['params'],
+
         data() {
             return {
                 'email': [],
@@ -57,14 +58,20 @@
         ,
         methods: {
             fetchEmail() {
+               let id = this.params.selectedId;
                 let baseUrl = window.Laravel.baseUrl;
-                fetch(baseUrl+"/api/email/"+this.id)
+                fetch(baseUrl+"/api/email/"+ id )
                     .then(res=> res.json())
                     .then(res => {
                         this.email = res.result;
                         console.log(this.email );
                     })
+            },
+            setId(){
+                this.id = id;
+                this.fetchEmail();
             }
+
         }
     }
 
