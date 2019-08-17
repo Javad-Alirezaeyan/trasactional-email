@@ -19,7 +19,7 @@ class Email extends Model
 
 
 
-    public static function selectData($where){
+    public static function selectData($where=[]){
        return  DB::table('emails')
             ->where($where)->orderBy('created_at', 'desc')
             ->get();
