@@ -11,7 +11,7 @@
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
 </div>
 <div id="main-wrapper">
-    @include("layouyts.partials.header")
+@include("layouyts.partials.header")
 @include("layouyts.partials.nav")
     <div id="app">
         <div class="page-wrapper">
