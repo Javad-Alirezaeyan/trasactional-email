@@ -192,7 +192,13 @@ you should see something like the following  text after running the above comman
   </code>
   It is better we define a cron job for this command when we export the  project
   
+ Note: If you would to have some dat in database, you can run the following command. 
  
+ <code>
+ docker exec app php artisan db:seed
+ </code>
+ 
+<u>This command generates  the correct format of dummy data for us</u>
  
  As a final step,  visit http://your_server_ip:8080 in the browser. 
  API is available  in  http://your_server_ip:8080/api/<request>, 
