@@ -1800,18 +1800,9 @@ __webpack_require__.r(__webpack_exports__);
       }).done(function (res, textStatus, xhr) {
         if (xhr.status == 200) {
           //show confirmation
-          alert("Email queued, It will send in one minute");
+          alert("Your email was queued, It will send in one minute");
           var baseUrl = window.Laravel.baseUrl;
           window.location.href = baseUrl;
-          /* $.toast({
-               heading: 'success',
-               text: 'Email queued, It will send in one minute',
-               position: 'top-right',
-               loaderBg:'#ff6849',
-               icon: 'info',
-               hideAfter: 3500,
-               stack: 6
-           });*/
         } else {
           this.errors = res.errors;
         }
@@ -1874,7 +1865,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EmailDetail",
-  props: ['id'],
+  props: ['params'],
   data: function data() {
     return {
       'email': [],
@@ -1892,13 +1883,114 @@ __webpack_require__.r(__webpack_exports__);
     fetchEmail: function fetchEmail() {
       var _this = this;
 
+      var id = this.params.selectedId;
       var baseUrl = window.Laravel.baseUrl;
-      fetch(baseUrl + "/api/email/" + this.id).then(function (res) {
+      fetch(baseUrl + "/api/email/" + id).then(function (res) {
         return res.json();
       }).then(function (res) {
         _this.email = res.result;
         console.log(_this.email);
       });
+    },
+    setId: function setId() {
+      this.id = id;
+      this.fetchEmail();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmailFrame.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmailFrame.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "emailFrame",
+  data: function data() {
+    return {
+      content: 0
+    };
+  },
+  created: function created() {
+    this.content = 0;
+  },
+  mounted: function mounted() {},
+  methods: {
+    setCompose: function setCompose() {
+      this.content = 1;
+    },
+    changeState: function changeState(state) {
+      this.content = 0; //let parent = new Vue({ el: '#frameContent' })
+
+      var child = this.$refs.tableemail;
+      child.showList = true;
+      child.changeState(state);
+    },
+    deletedList: function deletedList(state) {
+      this.content = 0;
+      var child = this.$refs.tableemail;
+      child.showList = true;
+      child.getDeletedEmail();
     }
   }
 });
@@ -1972,10 +2064,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       'emails': [],
+      state: -1,
+      deleted: 0,
+      showList: true,
+      selectedId: -1,
       'email': {
         'to': '',
         'from': '',
@@ -1996,7 +2095,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchEmails: function fetchEmails() {
       var _this = this;
 
-      fetch("api/email").then(function (res) {
+      fetch("api/email" + "?state=" + this.state + "&deleted=" + this.deleted).then(function (res) {
         return res.json();
       }).then(function (res) {
         // console.log(res.result);
@@ -2009,13 +2108,15 @@ __webpack_require__.r(__webpack_exports__);
     deleteItems: function deleteItems() {
       $.ajax({
         url: "api/email",
-        type: 'PUT',
-        data: this.selectedList,
+        type: 'DELETE',
+        data: {
+          idList: this.selectedList
+        },
         dataType: 'json'
       }).done(function (res, textStatus, xhr) {
         if (xhr.status == 204) {
           //show confirmation
-          this.emails = [];
+          this.selectedList = [];
         } else {
           this.errors = res.errors;
         }
@@ -2033,6 +2134,25 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       }
+    },
+    changeState: function changeState(state) {
+      this.state = state;
+      this.deleted = 0;
+      this.fetchEmails();
+    },
+    getDeletedEmail: function getDeletedEmail() {
+      this.deleted = 1;
+      this.state = -1;
+      this.fetchEmails();
+    },
+    allEmail: function allEmail() {
+      this.state = -1;
+      this.deleted = 0;
+      this.fetchEmails();
+    },
+    showdetail: function showdetail(id) {
+      this.selectedId = id;
+      this.showList = false;
     }
   }
 });
@@ -37594,6 +37714,220 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmailFrame.vue?vue&type=template&id=4e160948&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmailFrame.vue?vue&type=template&id=4e160948& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-xlg-2 col-lg-4 col-md-4" }, [
+            _c("div", { staticClass: "card-block inbox-panel" }, [
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "btn btn-danger m-b-20 p-10 btn-block waves-effect waves-light",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.setCompose()
+                    }
+                  }
+                },
+                [_vm._v("Compose")]
+              ),
+              _vm._v(" "),
+              _c("ul", { staticClass: "list-group list-group-full" }, [
+                _c("li", { staticClass: "list-group-item " }, [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          return _vm.changeState(-1)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "mdi mdi-file-document-box" }),
+                      _vm._v(
+                        "\n                                    Sent Mail\n                                "
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c("li", { staticClass: "list-group-item" }, [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deletedList()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "mdi mdi-delete" }),
+                      _vm._v(" Trash ")
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("h3", { staticClass: "card-title m-t-40" }, [
+                _vm._v("Labels")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "list-group b-0 mail-list" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "list-group-item",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeState(0)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", {
+                      staticClass: "fa fa-circle text-warning m-r-10"
+                    }),
+                    _vm._v("Queued")
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "list-group-item",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeState(1)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", {
+                      staticClass: "fa fa-circle text-danger m-r-10"
+                    }),
+                    _vm._v("NotDelivered")
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "list-group-item",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeState(2)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", {
+                      staticClass: "fa fa-circle text-info m-r-10"
+                    }),
+                    _vm._v("Sent")
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "list-group-item",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeState(3)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", {
+                      staticClass: "fa fa-circle text-success m-r-10"
+                    }),
+                    _vm._v("Delivered")
+                  ]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "col-xlg-10 col-lg-8 col-md-8",
+              attrs: { id: "frameContent" }
+            },
+            [
+              _vm.content == 0
+                ? _c("div", [_c("table-email", { ref: "tableemail" })], 1)
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.content == 1 ? _c("div", [_c("compose-email")], 1) : _vm._e()
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "list-group-item" }, [
+      _c("a", { attrs: { href: "" } }, [
+        _c("i", { staticClass: "mdi mdi-star" }),
+        _vm._v(" Starred ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "list-group-item" }, [
+      _c("a", { attrs: { href: "" } }, [
+        _c("i", { staticClass: "mdi mdi-send" }),
+        _vm._v(" Draft ")
+      ]),
+      _c("span", { staticClass: "badge badge-danger ml-auto" }, [_vm._v("0")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TableEmail.vue?vue&type=template&id=5d121619&":
 /*!*************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TableEmail.vue?vue&type=template&id=5d121619& ***!
@@ -37609,121 +37943,186 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-xlg-10 col-lg-8 col-md-8" }, [
-    _c(
-      "div",
-      {
-        staticClass: "btn-group m-b-10 m-r-10",
-        attrs: {
-          role: "group",
-          "aria-label": "Button group with nested dropdown"
-        }
-      },
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-secondary font-18 text-dark",
-            attrs: { type: "button", title: "delete selected Items" },
-            on: {
-              click: function($event) {
-                return _vm.deleteItems()
+  return _c("div", [
+    _vm.showList == true
+      ? _c("div", [
+          _c(
+            "div",
+            {
+              staticClass: "btn-group m-b-10 m-r-10",
+              attrs: {
+                role: "group",
+                "aria-label": "Button group with nested dropdown"
               }
-            }
-          },
-          [_c("i", { staticClass: "mdi mdi-delete" })]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-secondary m-r-10 m-b-10 text-dark",
-        attrs: { type: "button ", title: "refresh list" },
-        on: {
-          click: function($event) {
-            return _vm.refreshItems()
-          }
-        }
-      },
-      [_c("i", { staticClass: "mdi mdi-reload font-18" })]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-block p-t-0" }, [
-      _c("div", { staticClass: "card b-all shadow-none" }, [
-        _c("div", { staticClass: "inbox-center table-responsive" }, [
-          _c("table", { staticClass: "table table-hover no-wrap" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.emails, function(email) {
-                return _c("tr", { key: email.id }, [
-                  _c("td", { staticStyle: { width: "40px" } }, [
-                    _c("div", { staticClass: "checkbox" }, [
-                      _c("input", {
-                        attrs: {
-                          id: "a" + email.id,
-                          type: "checkbox",
-                          value: "check"
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.selectEmail(email.id, $event)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("label", { attrs: { for: "a" + email.id } })
-                    ])
-                  ]),
+            },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary font-18 text-dark",
+                  attrs: { type: "button", title: "delete selected Items" },
+                  on: {
+                    click: function($event) {
+                      return _vm.deleteItems()
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "mdi mdi-delete" })]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary m-r-10 m-b-10 text-dark",
+              attrs: { type: "button ", title: "refresh list" },
+              on: {
+                click: function($event) {
+                  return _vm.refreshItems()
+                }
+              }
+            },
+            [_c("i", { staticClass: "mdi mdi-reload font-18" })]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-block p-t-0" }, [
+            _c("div", { staticClass: "card b-all shadow-none" }, [
+              _c("div", { staticClass: "inbox-center table-responsive" }, [
+                _c("table", { staticClass: "table table-hover no-wrap" }, [
+                  _vm._m(1),
                   _vm._v(" "),
-                  _vm._m(2, true),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "hidden-xs-down" }, [
-                    _c("a", { attrs: { href: "detail/" + email.id } }, [
-                      _vm._v(_vm._s(email.to.substr(0, 20)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "hidden-xs-down" }, [
-                    _c("a", { attrs: { href: "detail/" + email.id } }, [
-                      _vm._v(_vm._s(email.subject.substr(0, 20)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "hidden-xs-down" }, [
-                    _c("a", { attrs: { href: "detail/" + email.id } }, [
-                      _vm._v(_vm._s(email.content.substr(0, 20)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-right" }, [
-                    _c("a", { attrs: { href: "detail/" + email.id } }, [
-                      _vm._v(" " + _vm._s(email.date))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "hidden-xs-down" }, [
-                    _c("a", { attrs: { href: "detail/" + email.id } }, [
-                      _c(
-                        "span",
-                        { class: "label " + email.stateInfo.ColorClass },
-                        [_vm._v(_vm._s(email.stateInfo.Title))]
-                      )
-                    ])
-                  ])
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.emails, function(email) {
+                      return _c("tr", { key: email.id }, [
+                        _c("td", { staticStyle: { width: "40px" } }, [
+                          _c("div", { staticClass: "checkbox" }, [
+                            _c("input", {
+                              attrs: {
+                                id: "a" + email.id,
+                                type: "checkbox",
+                                value: "check"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.selectEmail(email.id, $event)
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "a" + email.id } })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(2, true),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "hidden-xs-down" }, [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showdetail(email.id)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(email.to.substr(0, 20)))]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "hidden-xs-down" }, [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showdetail(email.id)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(email.subject.substr(0, 20)))]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "hidden-xs-down" }, [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showdetail(email.id)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(email.content.substr(0, 20)))]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-right" }, [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showdetail(email.id)
+                                }
+                              }
+                            },
+                            [_vm._v(" " + _vm._s(email.date))]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "hidden-xs-down" }, [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showdetail(email.id)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                {
+                                  class: "label " + email.stateInfo.ColorClass
+                                },
+                                [_vm._v(_vm._s(email.stateInfo.Title))]
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
                 ])
-              }),
-              0
-            )
+              ])
+            ])
           ])
         ])
-      ])
-    ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.showList == false
+      ? _c(
+          "div",
+          [
+            _c("detail-email", {
+              attrs: { params: { selectedId: _vm.selectedId } }
+            })
+          ],
+          1
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -49934,8 +50333,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 import DataTable from 'laravel-vue-datatable';
 Vue.use(DataTable);
 */
+//var axios = require('axios');
 
-var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -49946,8 +50345,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-
 Vue.component('table-email', __webpack_require__(/*! ./components/TableEmail.vue */ "./resources/js/components/TableEmail.vue")["default"]);
+Vue.component('frame-email', __webpack_require__(/*! ./components/EmailFrame.vue */ "./resources/js/components/EmailFrame.vue")["default"]);
 Vue.component('compose-email', __webpack_require__(/*! ./components/Compose.vue */ "./resources/js/components/Compose.vue")["default"]);
 Vue.component('detail-email', __webpack_require__(/*! ./components/EmailDetail.vue */ "./resources/js/components/EmailDetail.vue")["default"]);
 /**
@@ -50168,6 +50567,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailDetail_vue_vue_type_template_id_1aa5d772___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailDetail_vue_vue_type_template_id_1aa5d772___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/EmailFrame.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/EmailFrame.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmailFrame_vue_vue_type_template_id_4e160948___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmailFrame.vue?vue&type=template&id=4e160948& */ "./resources/js/components/EmailFrame.vue?vue&type=template&id=4e160948&");
+/* harmony import */ var _EmailFrame_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmailFrame.vue?vue&type=script&lang=js& */ "./resources/js/components/EmailFrame.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EmailFrame_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EmailFrame_vue_vue_type_template_id_4e160948___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EmailFrame_vue_vue_type_template_id_4e160948___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/EmailFrame.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/EmailFrame.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/EmailFrame.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailFrame_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./EmailFrame.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmailFrame.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailFrame_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/EmailFrame.vue?vue&type=template&id=4e160948&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/EmailFrame.vue?vue&type=template&id=4e160948& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailFrame_vue_vue_type_template_id_4e160948___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EmailFrame.vue?vue&type=template&id=4e160948& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmailFrame.vue?vue&type=template&id=4e160948&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailFrame_vue_vue_type_template_id_4e160948___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailFrame_vue_vue_type_template_id_4e160948___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
