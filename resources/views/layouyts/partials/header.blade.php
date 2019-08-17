@@ -17,14 +17,13 @@
                 <b>
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <img width="70" height="70" src="{{ asset("images/logo.jpg") }}" alt="Email Service" class="dark-logo" />
+                    <img width="1100" height="60" src="{{ asset("images/logo.jpg") }}" alt="Email Service" class="dark-logo" />
                     <!-- Light Logo icon -->
-                    <img width="70" height="70" src="{{ asset("images/logo.jpg") }}" alt="Email Service" class="light-logo" />
+                    <img width="100" height="60" src="{{ asset("images/logo.jpg") }}" alt="Email Service" class="light-logo" />
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->
-                <span>
-
+            </a>
         </div>
         <!-- ============================================================== -->
         <!-- End Logo -->
