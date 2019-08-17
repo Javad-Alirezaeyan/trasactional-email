@@ -26,14 +26,21 @@ class EmailController extends Controller
      * @return Email[]|\Illuminate\Database\Eloquent\Collection
      * this function returns all email records
      */
-    public function index()
+    public function index(Request $request)
     {
         $response = new ResponseObject();
+        $state = $request->input('state', -1);
+        $delete = $request->input('deleted', 0);
+
+        $where['email_deleted'] =$delete;
+        if($state != -1){
+            $where['email_state'] = $state;
+        }
 
         $response->status = $response::status_ok;
         $response->code = $response::code_ok;
        // $response->result = Email::all();
-        $response->result = new EmailCollection(Email::selectData(['email_deleted'=> 0]));
+        $response->result = new EmailCollection(Email::selectData($where));
         return Response::json($response);
     }
 
@@ -159,20 +166,16 @@ class EmailController extends Controller
      * this method shows all emails in a table
      *
      */
-    public function showall(){
-        return view("/email/emailframe",
-            [
-                'partialview'=> 'table',
-                'params'=> []
-            ]
-        );
+    public function showall(Request $request){
+
+        return view("/email/emailframe");
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * this function shows a form to send an email
      */
-    public function compose(){
+ /*   public function compose(){
 
         return view("/email/emailframe",
             [
@@ -189,7 +192,7 @@ class EmailController extends Controller
                 'params'=> ['id'=>$id]
             ]
         );
-    }
+    }*/
 
 
 }
