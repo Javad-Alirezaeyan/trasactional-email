@@ -1799,8 +1799,7 @@ __webpack_require__.r(__webpack_exports__);
         dataType: 'json'
       }).done(function (res, textStatus, xhr) {
         if (xhr.status == 200) {
-          //show confirmation
-          alert("Your email was queued, It will send in one minute");
+          //show confirmation                            alert("Your email was queued, It will send in one minute");
           var baseUrl = window.Laravel.baseUrl;
           window.location.href = baseUrl;
         } else {
@@ -37475,7 +37474,7 @@ var render = function() {
     _c("div", { staticClass: "form-group" }, [
       _c("p", [
         _vm._v(
-          "please hit enter buttn, if you want to insert more than one email"
+          "please distract emails with coma (,) if you want to insert more than one email"
         )
       ]),
       _vm._v(" "),
@@ -37733,7 +37732,7 @@ var render = function() {
     _c("div", { staticClass: "col-lg-12" }, [
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xlg-2 col-lg-4 col-md-4" }, [
+          _c("div", { staticClass: "col-xlg-2 col-lg-2 col-md-4" }, [
             _c("div", { staticClass: "card-block inbox-panel" }, [
               _c(
                 "a",
@@ -37881,7 +37880,7 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "col-xlg-10 col-lg-8 col-md-8",
+              staticClass: "col-xlg-12 col-lg-10 col-md-8",
               attrs: { id: "frameContent" }
             },
             [

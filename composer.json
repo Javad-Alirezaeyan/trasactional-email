@@ -39,14 +39,12 @@
         "classmap": [
             "database/seeds",
             "database/factories"
-        ]
+        ],
+        "files": ["app/MyConstants/constants.php"]
     },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        },
-        "autoload": {
-            "files": ["app/MyConstants/constants.php"]
         }
     },
     "minimum-stability": "dev",
