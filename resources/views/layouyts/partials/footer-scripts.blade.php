@@ -13,11 +13,10 @@
 <script src="{{asset("theme/assets/plugins/bootstrap/js/tether.min.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/bootstrap/js/bootstrap.min.js")}} " ></script>
 <script src="{{asset("theme/horizontal/js/jquery.slimscroll.js")}} " ></script>
-<script src="{{asset("theme/assets/plugins/sticky-kit-master/dist/sticky-kit.js")}} " ></script>
 <script src="{{asset("theme/horizontal/js/waves.js")}} " ></script>
 <script src="{{asset("theme/horizontal/js/sidebarmenu.js")}} " ></script>
+<script src="{{asset("theme/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/sparkline/jquery.sparkline.min.js")}} " ></script>
-
 <script src="{{asset("theme/assets/plugins/switchery/dist/switchery.min.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/d3/d3.min.js")}} " ></script>
 <script src="{{asset("theme/assets/plugins/moment/moment.js")}} " ></script>

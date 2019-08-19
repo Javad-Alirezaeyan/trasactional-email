@@ -7,6 +7,11 @@
             </div>
             <button type="button " title="refresh list" class="btn btn-secondary m-r-10 m-b-10 text-dark" v-on:click="refreshItems()"><i class="mdi mdi-reload font-18"></i></button>
 
+            <div class="btn-group m-b-10 m-r-10 " role="group" aria-label="Button group with nested dropdown">
+                <span style=" margin-right: 5px">{{fromNumber}}-{{ toNumber}} of {{ allCount }}</span>
+                <button :aria-disabled="checkPrevDisable" type="button" title="" class="btn btn-secondary font-18 text-dark" v-on:click="prevpage()" ><i class="mdi mdi-arrow-left"></i></button>
+                <button :aria-disabled="checkNextDisable" type="button" title="delete selected Items" class="btn btn-secondary font-18 text-dark" v-on:click="nextpage()"  ><i class="mdi mdi-arrow-right" ></i></button>
+            </div>
             <div class="card-block p-t-0">
                 <div class="card b-all shadow-none">
                     <div class="inbox-center table-responsive">
@@ -67,6 +72,13 @@
                 'emails': [],
                 state : -1,
                 deleted : 0,
+                page : 1,
+                count : 10,
+                allCount : 0,
+                fromNumber : 0,
+                toNumber : 0,
+                nextBtnDisable : false,
+                prevBtnDisable : false,
                 showList : true,
                 selectedId : -1,
                 'email': {
@@ -89,11 +101,38 @@
         methods: {
 
             fetchEmails() {
-                fetch("api/email"+"?state="+this.state+"&deleted="+this.deleted)
+                fetch("api/email"+"?state="+this.state+"&deleted="+this.deleted+"&count="+this.count+"&page="+this.page)
                     .then(res => res.json())
                     .then(res => {
                        // console.log(res.result);
-                        this.emails = res.result;
+                        this.nextBtnDisable = false;
+                        this.prevBtnDisable = false;
+
+                        this.emails = res.result.emails;
+                        this.page = parseInt(res.result.page);
+                        this.count = parseInt(res.result.count);
+                        this.allCount = parseInt(res.result.all);
+                        if (this.allCount > 0){
+                            this.fromNumber = (this.page -1) * this.count + 1;
+                        }
+                        else{
+                            this.fromNumber = 0;
+                        }
+                        if (this.allCount >= 10){
+                            this.toNumber =  parseInt(this.fromNumber + this.count -1);
+                        }
+                        else{
+                            this.toNumber =  this.allCount
+                        }
+
+                        if ( this.toNumber > this.allCount) {
+                            this.toNumber = this.allCount;
+                            this.nextBtnDisable = true;
+                        }
+                        if (this.page == 1){
+                            this.prevBtnDisable = true;
+                        }
+
                     })
             },
             refreshItems(){
@@ -153,6 +192,26 @@
             showdetail(id){
                 this.selectedId = id;
                 this.showList = false;
+            },
+            prevpage(){
+                if (this.page == 1) {
+                    return;
+                }
+                this.page -= 1;
+                this.fetchEmails();
+            },
+            nextpage(){
+                if (this.toNumber >= this.allCount) {
+                    return;
+                }
+                this.page += 1;
+                this.fetchEmails();
+            },
+            checkPrevDisable(){
+                return this.prevBtnDisable;
+            },
+            checkNextDisable(){
+                return this.nextBtnDisable;
             }
         }
     }

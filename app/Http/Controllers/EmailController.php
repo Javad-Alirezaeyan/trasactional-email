@@ -31,6 +31,28 @@ class EmailController extends Controller
         $response = new ResponseObject();
         $state = $request->input('state', -1);
         $delete = $request->input('deleted', 0);
+        $page = $request->input('page', 1);
+        $count = $request->input('count', DefaultRowCount);
+
+
+        $validator = Validator::make($request->all(), [
+            'page' => 'integer',
+            'deleted' => 'integer',
+            'state' => 'integer',
+            'count' => 'integer',
+        ]);
+        //validation input
+        if($validator->fails()){
+            $response->status = $response::status_failed;
+            $response->code = $response::code_failed;
+            foreach ($validator->errors()->getMessages() as $item) {
+                array_push($response->errors, $item);
+            }
+            return Response::json($response);
+        }
+
+        //find offset based on page and count
+        $offset = ($page-1) * $count;
 
         $where['email_deleted'] =$delete;
         if($state != -1){
@@ -39,8 +61,13 @@ class EmailController extends Controller
 
         $response->status = $response::status_ok;
         $response->code = $response::code_ok;
-       // $response->result = Email::all();
-        $response->result = new EmailCollection(Email::selectData($where));
+       // $response->result = Email::all()
+        $response->result = [
+            'page' => $page,
+            'count' => $count,
+            'all' => Email::countAll($where),
+            'emails' =>new EmailCollection(Email::selectData($where, $offset, $count))
+        ];
         return Response::json($response);
     }
 

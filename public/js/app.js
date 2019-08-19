@@ -2066,12 +2066,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       'emails': [],
       state: -1,
       deleted: 0,
+      page: 1,
+      count: 10,
+      allCount: 0,
+      fromNumber: 0,
+      toNumber: 0,
+      nextBtnDisable: false,
+      prevBtnDisable: false,
       showList: true,
       selectedId: -1,
       'email': {
@@ -2094,11 +2106,37 @@ __webpack_require__.r(__webpack_exports__);
     fetchEmails: function fetchEmails() {
       var _this = this;
 
-      fetch("api/email" + "?state=" + this.state + "&deleted=" + this.deleted).then(function (res) {
+      fetch("api/email" + "?state=" + this.state + "&deleted=" + this.deleted + "&count=" + this.count + "&page=" + this.page).then(function (res) {
         return res.json();
       }).then(function (res) {
         // console.log(res.result);
-        _this.emails = res.result;
+        _this.nextBtnDisable = false;
+        _this.prevBtnDisable = false;
+        _this.emails = res.result.emails;
+        _this.page = parseInt(res.result.page);
+        _this.count = parseInt(res.result.count);
+        _this.allCount = parseInt(res.result.all);
+
+        if (_this.allCount > 0) {
+          _this.fromNumber = (_this.page - 1) * _this.count + 1;
+        } else {
+          _this.fromNumber = 0;
+        }
+
+        if (_this.allCount >= 10) {
+          _this.toNumber = parseInt(_this.fromNumber + _this.count - 1);
+        } else {
+          _this.toNumber = _this.allCount;
+        }
+
+        if (_this.toNumber > _this.allCount) {
+          _this.toNumber = _this.allCount;
+          _this.nextBtnDisable = true;
+        }
+
+        if (_this.page == 1) {
+          _this.prevBtnDisable = true;
+        }
       });
     },
     refreshItems: function refreshItems() {
@@ -2152,6 +2190,28 @@ __webpack_require__.r(__webpack_exports__);
     showdetail: function showdetail(id) {
       this.selectedId = id;
       this.showList = false;
+    },
+    prevpage: function prevpage() {
+      if (this.page == 1) {
+        return;
+      }
+
+      this.page -= 1;
+      this.fetchEmails();
+    },
+    nextpage: function nextpage() {
+      if (this.toNumber >= this.allCount) {
+        return;
+      }
+
+      this.page += 1;
+      this.fetchEmails();
+    },
+    checkPrevDisable: function checkPrevDisable() {
+      return this.prevBtnDisable;
+    },
+    checkNextDisable: function checkNextDisable() {
+      return this.nextBtnDisable;
     }
   }
 });
@@ -37880,7 +37940,7 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "col-xlg-12 col-lg-10 col-md-8",
+              staticClass: "col-xlg-10 col-lg-10 col-md-8",
               attrs: { id: "frameContent" }
             },
             [
@@ -37985,6 +38045,64 @@ var render = function() {
               }
             },
             [_c("i", { staticClass: "mdi mdi-reload font-18" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "btn-group m-b-10 m-r-10 ",
+              attrs: {
+                role: "group",
+                "aria-label": "Button group with nested dropdown"
+              }
+            },
+            [
+              _c("span", { staticStyle: { "margin-right": "5px" } }, [
+                _vm._v(
+                  _vm._s(_vm.fromNumber) +
+                    "-" +
+                    _vm._s(_vm.toNumber) +
+                    " of " +
+                    _vm._s(_vm.allCount)
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary font-18 text-dark",
+                  attrs: {
+                    "aria-disabled": _vm.checkPrevDisable,
+                    type: "button",
+                    title: ""
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.prevpage()
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "mdi mdi-arrow-left" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary font-18 text-dark",
+                  attrs: {
+                    "aria-disabled": _vm.checkNextDisable,
+                    type: "button",
+                    title: "delete selected Items"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.nextpage()
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "mdi mdi-arrow-right" })]
+              )
+            ]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "card-block p-t-0" }, [
