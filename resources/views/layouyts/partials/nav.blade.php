@@ -12,7 +12,7 @@
                 </a>
             </li>
             <li>
-                <a class="has-arrow" href="{{ url("/") }}/compose" aria-expanded="false">
+                <a class="has-arrow" href="{{ url("/") }}" aria-expanded="false">
                     <i class="mdi mdi-compass-outline"></i>
                    Compose
                 </a>
