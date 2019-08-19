@@ -8,9 +8,9 @@ This service makes a confident service to transmit bulk emails. It uses multi on
 (such as Sendergrid, Mailjet, Mailgunn, Mailtrap, ... ) to deliver emails.
 
 The service is available on both 
-<a target="_blank" href="https://documenter.getpostman.com/view/1601502/SVYxnFT2?version=latest#5e927dcd-b917-458b-82ac-47a09703429f" > API </a>
+<a target="_blank" href="https://documenter.getpostman.com/view/1601502/SVYxnFT2?version=latest#3d9433d4-387e-4508-a6f9-69067f521bd0" > API </a>
  and UI. To see API document 
- <a target="_blank" href="https://documenter.getpostman.com/view/1601502/SVYxnFT2?version=latest#5e927dcd-b917-458b-82ac-47a09703429f" > click here</a> 
+ <a target="_blank" href="https://documenter.getpostman.com/view/1601502/SVYxnFT2?version=latest#3d9433d4-387e-4508-a6f9-69067f521bd0" > click here</a> 
 
  This service has configured with Docker, so you can use it in your convenient platform. 
 
@@ -216,4 +216,4 @@ you should see something like the following  text after running the above comman
  
  As a final step,  visit http://your_server_ip:8080 in the browser. 
  API is available  in  http://your_server_ip:8080/api/<request>, 
- for more detail about API <a target="_blank" href="https://documenter.getpostman.com/view/1601502/SVYxnFT2?version=latest#5e927dcd-b917-458b-82ac-47a09703429f" > click here</a> 
+ for more detail about API <a target="_blank" href="https://documenter.getpostman.com/view/1601502/SVYxnFT2?version=latest#3d9433d4-387e-4508-a6f9-69067f521bd0" > click here</a> 
