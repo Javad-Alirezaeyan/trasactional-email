@@ -6,9 +6,12 @@
  * Time: 10:58 PM
  */
 
- define("EmailQueued", 0);
- define("EmailNotSent", 1);
+define("EmailQueued", 0);
+define("EmailNotSent", 1);
 define("EmailSent", 2);
 define("EmailNotDelivered", 4);
 define("EmailDelivered", 3);
- define("EmailBounced", 5);
+define("EmailBounced", 5);
+
+
+define("DefaultRowCount", 10);
