@@ -38,7 +38,7 @@ class EmailController extends Controller
         $validator = Validator::make($request->all(), [
             'page' => 'integer',
             'deleted' => 'integer',
-            'state' => 'integer',
+            'state' => 'integer|min:0|max:5',
             'count' => 'integer',
         ]);
         //validation input
