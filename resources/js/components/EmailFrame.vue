@@ -35,7 +35,7 @@
                             </div>
                         </div>
 
-                        <div id="frameContent" class="col-xlg-12 col-lg-10 col-md-8"   >
+                        <div id="frameContent" class="col-xlg-10 col-lg-10 col-md-8"   >
                             <div v-if="content == 0 ">
                                 <table-email  ref="tableemail"></table-email>
                             </div>
