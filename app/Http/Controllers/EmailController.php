@@ -38,7 +38,7 @@ class EmailController extends Controller
         $validator = Validator::make($request->all(), [
             'page' => 'integer',
             'deleted' => 'integer',
-            'state' => 'integer|min:0|max:5',
+            'state' => 'integer|min:-1|max:5',
             'count' => 'integer',
         ]);
         //validation input
@@ -167,14 +167,39 @@ class EmailController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * this function deletes one or more emails, idList can be a list of id
      */
-    public function delete(Request $request, $id):string
+    public function bulkdelete(Request $request)
     {
-        $bulkIdList = $request->input('idList', [$id]);
-
         $response = new ResponseObject();
+        $bulkIdList = $request->input('idList', []);
+
         if(is_array($bulkIdList)){
             // soft delete
             Email::updateBulk($bulkIdList, ['email_deleted'=> 1]);
+            $response->status = 204;
+            $response->code = $response::code_ok;
+        }
+        else{
+            $response->status = $response::status_failed;
+            $response->code = $response::code_failed;
+            $response->message = "'Id' is not valid";
+        }
+
+        return Response::json($response);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * this function deletes one  email,
+     */
+    public function delete($id)
+    {
+        $response = new ResponseObject();
+
+        if(is_numeric($id)){
+            // soft delete
+            Email::updateData($id, ['email_deleted'=> 1]);
             $response->status = 204;
             $response->code = $response::code_ok;
         }
