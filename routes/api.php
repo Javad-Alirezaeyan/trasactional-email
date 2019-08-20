@@ -23,7 +23,7 @@ Route::post('email', 'EmailController@send');
 Route::get('email', 'EmailController@index');
 Route::get('email/{id}', 'EmailController@show');
 Route::delete('email/{id}', 'EmailController@delete');
-Route::delete('email', 'EmailController@delete');
+Route::delete('email', 'EmailController@bulkdelete');
 
 
 
