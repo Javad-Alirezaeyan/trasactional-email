@@ -140,23 +140,19 @@
             },
             deleteItems(){
 
-                $.ajax({
-                    url: "api/email",
-                    type: 'DELETE',
-                    data: {idList: this.selectedList},
-                    dataType: 'json',
-                })
-                    .done(function (res, textStatus, xhr) {
-                        if (xhr.status == 204){
-                            //show confirmation
-                            this.selectedList = [];
-                        }
-                        else{
-                            this.errors = res.errors;
-                        }
-                    })
-                    .fail(function (jqXHR, textStatus) {
-                        console.log(jqXHR.responseText);
+                let bodyJson =  JSON.stringify({'idList' : this.selectedList});
+                fetch("api/email", {
+                    method: 'Delete',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: bodyJson,
+                }).then(res => res.json())
+                    .then(res => {
+                        console.log(res);
+                        this.selectedList = [];
+                        this.fetchEmails();
                     });
             },
 
