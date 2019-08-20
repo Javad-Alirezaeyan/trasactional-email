@@ -13,23 +13,25 @@ class EmailApiTest extends TestCase
 
     public function testSendEmail()
     {
-        for($i=0; $i<10; $i++){
-            $email = factory(Email::class)->create();
-            $payload = [
-                'subject' => $email->email_subject ,
-                'to' => $email->email_to,
-                'from' => $email->email_from,
-                'contentValue' => $email->email_contentValue,
-            ];
 
-            $this->json('POST', 'api/email', $payload)
-                ->assertStatus(200)->assertJson([
-                    'status' => 'OK',
-                    'code' => 200,
-                    'message' => 'Queued',
-                    'errors' =>[]
-                ]);
-        }
+       //$email = factory(Email::class)->create();
+
+        $payload = [
+            'subject' => "test of sending email",
+            'to' => "example@gmail.com",
+            'from' => "test@gmail.com",
+            'contentValue' => "This tutorial assumes that you use PHP 7.2 or PHP 7.3. You will learn how to write simple 
+            unit tests as well as how to download and run PHPUnit. ",
+        ];
+
+        $this->json('POST', 'api/email', $payload)
+            ->assertStatus(200)->assertJson([
+                'status' => 'OK',
+                'code' => 200,
+                'message' => 'Queued',
+                'errors' => []
+            ]);
+
     }
 
     public function testWrongMethod()
@@ -56,35 +58,35 @@ class EmailApiTest extends TestCase
         $email1 = factory(Email::class)->create();
         $email2 = factory(Email::class)->create();
 
-         $this->json('get', 'api/email')
+        $this->json('get', 'api/email')
             ->assertJsonFragment([
                 [
-                    'id'=> $email1->email_id,
+                    'id' => $email1->email_id,
                     'subject' => $email1->email_subject,
                     'to' => $email1->email_to,
                     'from' => $email1->email_from,
-                    "stateInfo"=>[
+                    "stateInfo" => [
                         "Title" => 'Queued',
-                        'ColorClass'=> 'label-warning'
+                        'ColorClass' => 'label-warning'
                     ],
-                    "state" =>$email2->email_state,
+                    "state" => $email2->email_state,
                     'content' => $email1->email_contenetValue,
                     'contentType' => $email1->email_contentType,
-                    "date"=> $email1->created_at
+                    "date" => $email1->created_at
                 ],
                 [
-                    'id'=> $email2->email_id,
+                    'id' => $email2->email_id,
                     'subject' => $email2->email_subject,
                     'to' => $email2->email_to,
                     'from' => $email2->email_from,
-                    "stateInfo"=>[
+                    "stateInfo" => [
                         "Title" => 'Queued',
-                        'ColorClass'=> 'label-warning'
+                        'ColorClass' => 'label-warning'
                     ],
-                    "state" =>$email2->email_state,
+                    "state" => $email2->email_state,
                     'content' => $email1->email_contenValue,
                     'contentType' => $email2->email_contentType,
-                    "date"=> $email2->created_at
+                    "date" => $email2->created_at
                 ]
             ]);
     }
@@ -98,12 +100,12 @@ class EmailApiTest extends TestCase
 
         $email = factory(Email::class)->create();
 
-        $this->json('Get', 'api/email/'.$email->email_id)
+        $this->json('Get', 'api/email/' . $email->email_id)
             ->assertStatus(200)->assertJsonFragment([
                 'status' => 'OK',
                 'code' => 200,
                 'message' => '',
-                'errors' =>[],
+                'errors' => [],
                 'result' =>
                     [
                         'id' => $email->email_id,
@@ -111,7 +113,7 @@ class EmailApiTest extends TestCase
                         'to' => $email->email_to,
                         'from' => $email->email_from,
                         'stateInfo' =>
-                            array (
+                            array(
                                 'Title' => 'Queued',
                                 'ColorClass' => 'label-warning',
                             ),
@@ -128,14 +130,13 @@ class EmailApiTest extends TestCase
     {
         $email = factory(Email::class)->create();
 
-        $this->json('Delete', 'api/email/'.$email->email_id)
-            ->assertStatus(200)->assertJson(array (
+        $this->json('Delete', 'api/email/' . $email->email_id)
+            ->assertStatus(200)->assertJson(array(
                 'status' => 204,
                 'code' => 200,
                 'message' => '',
                 'errors' =>
-                    array (
-                    ),
+                    array(),
                 'result' => '',
             ));
     }
